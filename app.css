@@ -1,0 +1,17 @@
+header {
+    text-align: center;
+}
+
+main {background-color: #A7F5E7;
+}
+
+.container1 {
+    padding-left: 25px;
+    padding-top: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px    
+}
+
+.btn-info {
+    border-style: solid black;
+}
