@@ -1,34 +1,54 @@
-// Get the radio buttons for the theme selection
-themeRadios = document.querySelectorAll('input[name="theme"]');
+// // Get the radio buttons for the theme selection
+// themeRadios = document.querySelectorAll('input[name="theme"]');
 
-// Get the body element
-body = document.body;
+// // Get the body element
+// body = document.body;
 
-// Retrieve the user's preferred theme from localStorage
-preferredTheme = localStorage.getItem('preferredTheme');
+// // Retrieve the user's preferred theme from localStorage
+// preferredTheme = localStorage.getItem('preferredTheme');
 
-// Set the body's theme class based on the user's preferred theme (if available)
-if (preferredTheme) {
-  body.classList.add(`theme-${preferredTheme}`);
+// // Set the body's theme class based on the user's preferred theme (if available)
+// if (preferredTheme) {
+//   body.classList.add(`theme-${preferredTheme}`);
+// }
+
+// // Add a change event listener to each radio button
+// for ( radio of themeRadios) {
+//   radio.addEventListener('change', function() {
+//     // Check if the radio button is checked
+//     if (this.checked) {
+//       // Remove any existing theme classes from the body element
+//       body.classList.remove('theme-light', 'theme-dark');
+      
+//       // Add the new theme class to the body element
+//       body.classList.add(`theme-${this.value}`);
+      
+//       // Save the user's preferred theme to localStorage
+//       localStorage.setItem('preferredTheme', this.value);
+//     }
+//   });
+// }
+
+var themeName = "dark";
+
+document.cookie = "theme=" + themeName;
+
+// Read the "theme" cookie and apply the selected theme
+var theme = getCookie("theme");
+if (theme === "dark") {
+  document.body.classList.add("theme-dark");
 }
 
-// Add a change event listener to each radio button
-for ( radio of themeRadios) {
-  radio.addEventListener('change', function() {
-    // Check if the radio button is checked
-    if (this.checked) {
-      // Remove any existing theme classes from the body element
-      body.classList.remove('theme-light', 'theme-dark');
-      
-      // Add the new theme class to the body element
-      body.classList.add(`theme-${this.value}`);
-      
-      // Save the user's preferred theme to localStorage
-      localStorage.setItem('preferredTheme', this.value);
+function getCookie(name) {
+  var cookies = document.cookie.split("; ");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].split("=");
+    if (cookie[0] === name) {
+      return cookie[1];
     }
-  });
+  }
+  return "";
 }
-
 
 
 
@@ -41,8 +61,8 @@ if (Notification.permission === "granted") {
 // Check if the browser supports notifications
 if ("Notification" in window) {
   // If notifications are supported, show the notification radio buttons
-  var notificationEnable = document.getElementById("notification-enable");
-  var notificationDisable = document.getElementById("notification-disable");
+  notificationEnable = document.getElementById("notification-enable");
+  notificationDisable = document.getElementById("notification-disable");
   notificationEnable.style.display = "inline-block";
   notificationDisable.style.display = "inline-block";
 
