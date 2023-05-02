@@ -16,6 +16,15 @@ main {background-color: #A7F5E7;
     border-style: solid black;
 }
 
+.social-media {
+  display: inline-block;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.social-media img {
+  margin: 0 auto;
+}
 /* Light theme */
 body.theme-light {
   background-color: #f0f0f0;

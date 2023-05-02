@@ -62,38 +62,40 @@ if ("Notification" in window) {
   // If notifications are supported, show the notification radio buttons
   notificationEnable = document.getElementById("notification-enable");
   notificationDisable = document.getElementById("notification-disable");
-  notificationEnable.style.display = "inline-block";
-  notificationDisable.style.display = "inline-block";
-
-  // Check the current permission status
-  if (Notification.permission === "granted") {
-    // Notifications are already allowed, set the "Enable Notifications" radio button to checked
-    notificationEnable.checked = true;
-  } else {
-    // Notifications are not allowed, set the "Disable Notifications" radio button to checked
-    notificationDisable.checked = true;
-  }
-  
-  // Add event listeners to the notification radio buttons
-  notificationEnable.addEventListener("click", function() {
-    if (Notification.permission !== "granted") {
-      // Notifications are not allowed, request permission
-      Notification.requestPermission().then(function(permission) {
-        if (permission === "granted") {
-          // Notifications are allowed, update the radio button states
-          notificationEnable.checked = true;
-          notificationDisable.checked = false;
-        }
-      });
-    }
-  });
-  
-  notificationDisable.addEventListener("click", function() {
+  if (notificationEnable != null && notificationDisable != null) {
+    notificationEnable.style.display = "inline-block";
+    notificationDisable.style.display = "inline-block";
+    
+    // Check the current permission status and update the radio button states
     if (Notification.permission === "granted") {
-      // Notifications are already allowed, disable them
-      Notification.permission = "denied";
+      notificationEnable.checked = true;
+      notificationDisable.checked = false;
+    } else {
       notificationEnable.checked = false;
       notificationDisable.checked = true;
     }
-  });
+    
+    // Add event listeners to the notification radio buttons
+    notificationEnable.addEventListener("click", function() {
+      if (Notification.permission !== "granted") {
+        // Request permission to show notifications
+        Notification.requestPermission().then(function(permission) {
+          if (permission === "granted") {
+            // Notifications are allowed, update the radio button states
+            notificationEnable.checked = true;
+            notificationDisable.checked = false;
+          }
+        });
+      }
+    });
+    
+    notificationDisable.addEventListener("click", function() {
+      if (Notification.permission === "granted") {
+        // Disable notifications
+        Notification.permission = "denied";
+        notificationEnable.checked = false;
+        notificationDisable.checked = true;
+      }
+    });
+  }
 }
