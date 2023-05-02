@@ -58,7 +58,6 @@ if (Notification.permission === "granted") {
     icon: "https://example.com/icon.png" 
   });
 }
-// Check if the browser supports notifications
 if ("Notification" in window) {
   // If notifications are supported, show the notification radio buttons
   notificationEnable = document.getElementById("notification-enable");
