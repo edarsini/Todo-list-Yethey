@@ -1,30 +1,36 @@
-var notificationToggle = document.getElementById('notification-toggle');
-var notificationText = document.getElementById('notification');
+window.addEventListener('load', function(){
+  var notificationToggle = document.getElementById('notification-toggle');
+  var notificationText = document.getElementById('notification');
+  var alertShown = false; // Track if alert has been shown
 
-notificationToggle.addEventListener('change', function() {
-  if (this.checked) {
-    // User has enabled notifications
-    Notification.requestPermission().then(function(permission) {
-      if (permission === 'granted') {
-        notificationText.innerText = 'Notifications enabled';
-      } else {
-        Notification.requestPermission().then(function(permission) {
-          if (permission === 'granted') {
-            notificationText.innerText = 'Notifications enabled';
-            notificationToggle.checked = true;
-          } 
-        });
-        alert("Enable the notification in the browser settings or reload the page");
-        notificationToggle.checked = false;
-        notificationText.innerText = 'Notifications disabled';
-      }
-    });
-  } else {
-    // User has disabled notifications
-    notificationText.innerText = 'Notifications disabled';
-    Notification.permission = denied;
-  }
+  notificationToggle.addEventListener('change', function() {
+    if (this.checked) {
+      // User has enabled notifications
+      Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+          notificationText.innerText = 'Notifications enabled';
+          notificationToggle.checked = true;
+        } 
+        else {
+          // Show alert only if it hasn't been shown before
+          if (!alertShown) {
+            alert("To enable notifications, please go to your browser settings and allow notifications for this website.");
+            alertShown = true;
+          }
+          notificationText.innerText = 'Notifications disabled';
+          notificationToggle.checked = false;
+          Notification.permission = 'denied';
+        }
+      });
+    } 
+    else {
+      notificationText.innerText = 'Notifications disabled';
+      notificationToggle.checked = false;
+      Notification.permission = 'denied';
+    }
+  });
 });
+
 
 //theme
 var themeRadios = document.querySelectorAll('input[name="theme"]');
@@ -52,7 +58,7 @@ for (var i = 0; i < themeRadios.length; i++) {
 }
 
 //rating bar
-const rating = document.getElementsByName('rating');
+rating = document.getElementsByName('rating');
 
 function setRatingValue() {
   let ratingValue;
