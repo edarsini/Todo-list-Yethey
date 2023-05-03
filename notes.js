@@ -4,12 +4,22 @@ showNotes();
 let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function(e) {
 	let addTxt = document.getElementById("addTxt");
+	const radioButtons = document.querySelectorAll('input[name="priority"]');
 	let notes = localStorage.getItem("notes");
+	let selectedPriority;
+	for(const radioButton of radioButtons) {
+		if(radioButton.checked){
+			selectedPriority = radioButton;
+			break;
+		}
+	}
 
 	if (notes == null) notesObj = [];
 	else notesObj = JSON.parse(notes);
-
-	notesObj.push(addTxt.value);
+	notesObj.push({
+		text: addTxt.value,
+		priority: selectedPriority.value
+	});
 	localStorage.setItem("notes", JSON.stringify(notesObj));
 	addTxt.value = "";
 
@@ -25,15 +35,25 @@ function showNotes() {
 
 	let html = "";
 
-	notesObj.forEach(function(element, index) {
+	notesObj.forEach(function(note, index) {
+		let priorityImg = "";
+		if (note.priority === "high"){
+			priorityImg = "high.png";
+		} else if (note.priority === "medium"){
+			priorityImg = "medium.png";
+		} else {
+			priorityImg = "low.png";
+		}
+
 		html += `<div class="noteCard my-2 mx-2 card"
 			style="width: 18rem;">
 				<div class="card-body">
 					<h5 class="card-title">
 						Note ${index + 1}
+						<img src = "${priorityImg}">
 					</h5>
 					<p class="card-text">
-						${element}
+						${note.text}
 					</p>
 
 				<button id="${index}" onclick=
