@@ -50,8 +50,12 @@ body[data-theme="dark"] {
 
 /* rating bar */
 .rating {
-  display: inline-block;
+  display: flex;
+  flex-direction: row-reverse; /* reverse the order of the stars */
+    display: inline-block;
+    text-align: left;
 }
+
 
 .rating input[type="radio"] {
   display: none;
