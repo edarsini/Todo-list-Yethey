@@ -1,100 +1,70 @@
-// // Get the radio buttons for the theme selection
-// themeRadios = document.querySelectorAll('input[name="theme"]');
+var notificationToggle = document.getElementById('notification-toggle');
+var notificationText = document.getElementById('notification');
 
-// // Get the body element
-// body = document.body;
-
-// // Retrieve the user's preferred theme from localStorage
-// preferredTheme = localStorage.getItem('preferredTheme');
-
-// // Set the body's theme class based on the user's preferred theme (if available)
-// if (preferredTheme) {
-//   body.classList.add(`theme-${preferredTheme}`);
-// }
-
-// // Add a change event listener to each radio button
-// for ( radio of themeRadios) {
-//   radio.addEventListener('change', function() {
-//     // Check if the radio button is checked
-//     if (this.checked) {
-//       // Remove any existing theme classes from the body element
-//       body.classList.remove('theme-light', 'theme-dark');
-      
-//       // Add the new theme class to the body element
-//       body.classList.add(`theme-${this.value}`);
-      
-//       // Save the user's preferred theme to localStorage
-//       localStorage.setItem('preferredTheme', this.value);
-//     }
-//   });
-// }
-
-var themeName = "dark";
-
-document.cookie = "theme=" + themeName;
-
-// Read the "theme" cookie and apply the selected theme
-var theme = getCookie("theme");
-if (theme === "dark") {
-  document.body.classList.add("theme-dark");
-}
-
-function getCookie(name) {
-  var cookies = document.cookie.split("; ");
-  for (var i = 0; i < cookies.length; i++) {
-    var cookie = cookies[i].split("=");
-    if (cookie[0] === name) {
-      return cookie[1];
-    }
-  }
-  return "";
-}
-
-
-
-if (Notification.permission === "granted") {
-  var notification = new Notification("Test Notification", { 
-    body: "This is a test notification.", 
-    icon: "https://example.com/icon.png" 
-  });
-}
-// Check if the browser supports notifications
-if ("Notification" in window) {
-  // If notifications are supported, show the notification radio buttons
-  notificationEnable = document.getElementById("notification-enable");
-  notificationDisable = document.getElementById("notification-disable");
-  notificationEnable.style.display = "inline-block";
-  notificationDisable.style.display = "inline-block";
-
-  // Check the current permission status
-  if (Notification.permission === "granted") {
-    // Notifications are already allowed, set the "Enable Notifications" radio button to checked
-    notificationEnable.checked = true;
+notificationToggle.addEventListener('change', function() {
+  if (this.checked) {
+    // User has enabled notifications
+    Notification.requestPermission().then(function(permission) {
+      if (permission === 'granted') {
+        notificationText.innerText = 'Notifications enabled';
+      } else {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            notificationText.innerText = 'Notifications enabled';
+            notificationToggle.checked = true;
+          } 
+        });
+        alert("Enable the notification in the browser settings or reload the page");
+        notificationToggle.checked = false;
+        notificationText.innerText = 'Notifications disabled';
+      }
+    });
   } else {
-    // Notifications are not allowed, set the "Disable Notifications" radio button to checked
-    notificationDisable.checked = true;
+    // User has disabled notifications
+    notificationText.innerText = 'Notifications disabled';
+    Notification.permission = denied;
   }
-  
-  // Add event listeners to the notification radio buttons
-  notificationEnable.addEventListener("click", function() {
-    if (Notification.permission !== "granted") {
-      // Notifications are not allowed, request permission
-      Notification.requestPermission().then(function(permission) {
-        if (permission === "granted") {
-          // Notifications are allowed, update the radio button states
-          notificationEnable.checked = true;
-          notificationDisable.checked = false;
-        }
-      });
+});
+
+//theme
+var themeRadios = document.querySelectorAll('input[name="theme"]');
+var themeValue = localStorage.getItem('theme') || 'light'; // get the saved theme value or default to light
+
+// set the appropriate radio button as checked based on the saved theme value
+for (var i = 0; i < themeRadios.length; i++) {
+  if (themeRadios[i].value === themeValue) {
+    themeRadios[i].checked = true;
+    break;
+  }
+}
+
+// function to handle theme change
+function handleThemeChange(event) {
+  console.log('handleThemeChange called');
+  var theme = event.target.value;
+  document.documentElement.setAttribute('data-theme', theme); // set the data-theme attribute on the html element
+  localStorage.setItem('theme', theme); // save the theme value to local storage
+}
+
+// add event listeners to the radio buttons to handle theme change
+for (var i = 0; i < themeRadios.length; i++) {
+  themeRadios[i].addEventListener('change', handleThemeChange);
+}
+
+//rating bar
+const rating = document.getElementsByName('rating');
+
+function setRatingValue() {
+  let ratingValue;
+  for (let i = 0; i < rating.length; i++) {
+    if (rating[i].checked) {
+      ratingValue = rating[i].value;
+      break;
     }
-  });
-  
-  notificationDisable.addEventListener("click", function() {
-    if (Notification.permission === "granted") {
-      // Notifications are already allowed, disable them
-      Notification.permission = "denied";
-      notificationEnable.checked = false;
-      notificationDisable.checked = true;
-    }
-  });
+  }
+  console.log(ratingValue); // this will log the selected rating value to the console
+}
+
+for (let i = 0; i < rating.length; i++) {
+  rating[i].addEventListener('click', setRatingValue);
 }
