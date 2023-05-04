@@ -107,6 +107,11 @@ span{
     position: absolute;
 }
 
+#result {
+    padding: 5px;
+    text-align: center;
+    font-family: sans-serif;
+}
 #login{
     left: 50px;
 }

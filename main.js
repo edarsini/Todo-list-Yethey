@@ -51,12 +51,12 @@
             var data = JSON.parse(user);
             console.log(data);
 
-            if(username == data.username && pass == data.password) {
-                result.innerHTML = "You have successfully logged into your account!";
-                alert("You have successfully logged into your account!");
-            }else if(user = !user) {
+            if(user = !user) {
                 result.innerHTML = "User does not exist!";
                 alert("User does not exist!");
+            }else if(username == data.username && pass == data.password) {
+                result.innerHTML = "You have successfully logged into your account!";
+                alert("You have successfully logged into your account!");
             }else{
                 result.innerHTML = "Incorrect Password!";
                 alert("Incorrect Password!");
