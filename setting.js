@@ -31,32 +31,7 @@ window.addEventListener('load', function(){
   });
 });
 
-
 //theme
-var themeRadios = document.querySelectorAll('input[name="theme"]');
-var themeValue = localStorage.getItem('theme') || 'light'; // get the saved theme value or default to light
-
-// set the appropriate radio button as checked based on the saved theme value
-for (var i = 0; i < themeRadios.length; i++) {
-  if (themeRadios[i].value === themeValue) {
-    themeRadios[i].checked = true;
-    break;
-  }
-}
-
-// function to handle theme change
-function handleThemeChange(event) {
-  console.log('handleThemeChange called');
-  var theme = event.target.value;
-  document.documentElement.setAttribute('data-theme', theme); // set the data-theme attribute on the html element
-  localStorage.setItem('theme', theme); // save the theme value to local storage
-}
-
-// add event listeners to the radio buttons to handle theme change
-for (var i = 0; i < themeRadios.length; i++) {
-  themeRadios[i].addEventListener('change', handleThemeChange);
-}
-
 body = document.querySelector("body");
 toggle = document.querySelector(".toggle");
 
