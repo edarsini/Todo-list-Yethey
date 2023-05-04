@@ -15,9 +15,9 @@
 
 .form-box{
     width: 380px;
-    height: 480px;
+    height: 450px;
     position: relative;
-    margin: 6% auto;
+    margin: 7% auto;
     background: #FFFFFF;
     padding: 5px;
     overflow: hidden;
@@ -27,8 +27,9 @@
     width: 220px;
     margin: 35px auto;
     position: relative;
-    box-shadow: 0 0 20px 9px #ff61241f;
+    box-shadow: 0 0 10px 9px #ff61241f;
     border-radius: 30px;
+    padding: 10px 0;
 }
 
 .toggle-btn{
@@ -50,7 +51,7 @@
     border-radius: 30px;
     transition: 0.5s;
 }
-
+/*
 .social-icons{
     margin: 30px auto;
     text-align: center;
@@ -62,9 +63,9 @@
     cursor: pointer;
     border-radius: 50px;
 }
-
+*/
 .input-group{
-    top: 180px;
+    top: 150px;
     position: absolute;
     width: 280px;
     transition: 0.5s;
@@ -92,6 +93,7 @@
     border: 0;
     outline: none;
     border-radius: 30px;
+    position: relative;
 }
 
 .chech-box{
