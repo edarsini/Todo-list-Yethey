@@ -18,6 +18,7 @@ addBtn.addEventListener("click", function (e) {
   notesObj.push({
     text: addTxt.value,
     priority: selectedPriority.value,
+	date: new Date().toLocaleDateString()
   });
   localStorage.setItem("notes", JSON.stringify(notesObj));
   addTxt.value = "";
@@ -32,6 +33,17 @@ function showNotes() {
 
   if (notes == null) notesObj = [];
   else notesObj = JSON.parse(notes);
+
+  const priorityValues = {
+	"high": 3,
+	"medium": 2,
+	"low": 1
+  };
+
+  // sort notesObj based on priority
+  notesObj.sort(function(a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
 
   let html = "";
 
@@ -54,6 +66,9 @@ function showNotes() {
 					</h5>
 					<p class="card-text">
 						${note.text}
+					</p>
+					<p class="card-text">
+						${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -91,6 +106,17 @@ function moveNoteToInProgress(index) {
     inProgressNotes = JSON.parse(inProgressNotes);
   }
 
+  const priorityValues = {
+	"high": 3,
+	"medium": 2,
+	"low": 1
+  };
+
+  // sort notesObj based on priority
+  notesObj.sort(function(a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
   let noteToMove = notesObj.splice(index, 1)[0];
   inProgressNotes.push(noteToMove);
 
@@ -108,6 +134,17 @@ function deleteNote(index) {
   if (notes == null) notesObj = [];
   else notesObj = JSON.parse(notes);
 
+  const priorityValues = {
+	"high": 3,
+	"medium": 2,
+	"low": 1
+  };
+
+  // sort notesObj based on priority
+  notesObj.sort(function(a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
   notesObj.splice(index, 1);
 
   localStorage.setItem("notes", JSON.stringify(notesObj));
@@ -120,6 +157,17 @@ function deleteNoteFromInProgress(index) {
 
   if (inProgressNotes == null) inProgressNotesObj = [];
   else inProgressNotesObj = JSON.parse(inProgressNotes);
+
+  const priorityValues = {
+	"high": 3,
+	"medium": 2,
+	"low": 1
+  };
+
+  // sort notesObj based on priority
+  inProgressNotesObj.sort(function(a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
 
   inProgressNotesObj.splice(index, 1);
 
@@ -134,6 +182,17 @@ function showInProgress() {
 
   if (inProgressNotes == null) inProgressNotesObj = [];
   else inProgressNotesObj = JSON.parse(inProgressNotes);
+
+  const priorityValues = {
+	"high": 3,
+	"medium": 2,
+	"low": 1
+  };
+
+  // sort notesObj based on priority
+  inProgressNotesObj.sort(function(a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
 
   let htmlInProgressNotes = "";
   inProgressNotesObj.forEach(function (note, index) {
@@ -155,6 +214,9 @@ function showInProgress() {
 					</h5>
 					<p class="card-text">
 						${note.text}
+					</p>
+					<p class="card-text">
+						${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -184,6 +246,17 @@ function moveNoteToCompleted(index) {
   
 	if (inProgressNotes == null) inProgressNotesObj = [];
 	else inProgressNotesObj = JSON.parse(inProgressNotes);
+
+	const priorityValues = {
+		"high": 3,
+		"medium": 2,
+		"low": 1
+	  };
+	
+	  // sort notesObj based on priority
+	  inProgressNotesObj.sort(function(a, b) {
+		return priorityValues[b.priority] - priorityValues[a.priority];
+	  });
   
 	let noteToMove = inProgressNotesObj.splice(index, 1)[0];
 	let completedNotes = localStorage.getItem("noteComplete");
@@ -206,6 +279,17 @@ function moveNoteToCompleted(index) {
   
 	if (completedNotes == null) completedNotesObj = [];
 	else completedNotesObj = JSON.parse(completedNotes);
+
+	const priorityValues = {
+		"high": 3,
+		"medium": 2,
+		"low": 1
+	  };
+	
+	  // sort notesObj based on priority
+	  completedNotesObj.sort(function(a, b) {
+		return priorityValues[b.priority] - priorityValues[a.priority];
+	  });
   
 	let htmlCompletedNotes = "";
 	completedNotesObj.forEach(function (note, index) {
@@ -228,6 +312,9 @@ function moveNoteToCompleted(index) {
 					  <p class="card-text">
 						  ${note.text}
 					  </p>
+					  <p class="card-text">
+						${note.date}
+					</p>
   
 				  <button id="${index}" onclick=
 					  "deleteNoteFromCompleted(this.id)"
@@ -251,6 +338,17 @@ function moveNoteToCompleted(index) {
   
 	if (completedNotes == null) completedNotes = [];
 	else completedNotes = JSON.parse(completedNotes);
+
+	const priorityValues = {
+		"high": 3,
+		"medium": 2,
+		"low": 1
+	  };
+	
+	  // sort notesObj based on priority
+	  completedNotesObj.sort(function(a, b) {
+		return priorityValues[b.priority] - priorityValues[a.priority];
+	  });
   
 	completedNotesObj.splice(index, 1);
   
