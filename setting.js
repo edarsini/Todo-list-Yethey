@@ -1,7 +1,7 @@
 window.addEventListener('load', function(){
-  var notificationToggle = document.getElementById('notification-toggle');
-  var notificationText = document.getElementById('notification');
-  var alertShown = false; // Track if alert has been shown
+  notificationToggle = document.getElementById('notification-toggle');
+  notificationText = document.getElementById('notification');
+  alertShown = false; // Track if alert has been shown
 
   notificationToggle.addEventListener('change', function() {
     if (this.checked) {
@@ -22,7 +22,7 @@ window.addEventListener('load', function(){
           Notification.permission = 'denied';
         }
       });
-    } 
+    }
     else {
       notificationText.innerText = 'Notifications disabled';
       notificationToggle.checked = false;
@@ -30,27 +30,6 @@ window.addEventListener('load', function(){
     }
   });
 });
-
-//theme
-body = document.querySelector("body");
-toggle = document.querySelector(".toggle");
-
-getMode = localStorage.getItem("mode");
-if(getMode && getMode==="dark"){
-  body.classList.add("dark");
-  toggle.classList.add("active");
-}
-
-toggle.addEventListener("click", () => {
-  body.classList.toggle("dark");
-
-  if(!body.classList.contains("dark")){
-    return localStorage.setItem("mode", "light");
-  }
-  localStorage.setItem("mode", "dark");
-});
-
-toggle.addEventListener("click", () => toggle.classList.toggle("active"));
 
 //rating bar
 rating = document.getElementsByName('rating');
