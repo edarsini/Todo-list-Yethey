@@ -88,18 +88,19 @@ main {background-color: #A7F5E7;
 
   .toggle{
     position: relative;
-    height: 80px;
-    width: 150px;
-    border-radius: 80px;
+    height: 50px;
+    width: 80px;
+    border-radius: 50px;
     background-color: grey;
     box-shadow: 0 5px 10px rgba (0,0,0,0.1);
+    margin-left: auto;
   }
 
   .toggle:before{
     content:"";
     position: absolute;
-    height:60px;
-    width:60px;
+    height:30px;
+    width:30px;
     background: white;
     border-radius: 50%;
     top: 50%;
@@ -110,7 +111,7 @@ main {background-color: #A7F5E7;
 
   .toggle.active::before{
     background-color: var(--dark-bg-color);
-    left: calc(100% - 60px - 10px);
+    left: calc(100% - 30px - 10px);
   }
   
   /* rating bar */
