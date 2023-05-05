@@ -33,7 +33,7 @@
 }
 
 .toggle-btn{
-    padding: 10px 30px;
+    padding: 10px 20px 10px 40px;
     cursor: pointer;
     background: transparent;
     border: 0;
@@ -107,6 +107,11 @@ span{
     position: absolute;
 }
 
+#result {
+    padding: 5px;
+    text-align: center;
+    font-family: sans-serif;
+}
 #login{
     left: 50px;
 }
