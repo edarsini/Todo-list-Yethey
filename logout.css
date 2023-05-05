@@ -26,7 +26,7 @@
     cursor: pointer;
   }
 
-.toggle{
+  .toggle{
     position: relative;
     height: 50px;
     width: 80px;
