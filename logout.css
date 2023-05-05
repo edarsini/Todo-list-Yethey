@@ -26,29 +26,7 @@
     cursor: pointer;
   }
 
-  .toggle{
-    position: relative;
-    height: 50px;
-    width: 80px;
-    border-radius: 50px;
-    background-color: grey;
-    box-shadow: 0 5px 10px rgba (0,0,0,0.1);
-    margin-left: auto;
-  }
-
   #navbarNavAltMarkup {
     margin-left: 20%;
   }
 
-  .toggle:before{
-    content:"";
-    position: absolute;
-    height:30px;
-    width:30px;
-    background: white;
-    border-radius: 50%;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    transition: all 0.3s ease-in-out;
-  }
