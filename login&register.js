@@ -15,7 +15,7 @@ function login() {
     z.style.left = "0";
 }
 
-
+//Function for Registering a New User and saving it to local storage
 const registerFunction = e => {
     let username = document.getElementById('username').value,
         email = document.getElementById('email').value,
@@ -39,7 +39,8 @@ const registerFunction = e => {
         }
             e.preventDefault();
 }
-    
+
+//Function for User to Log into their account and saving it to local storage
 function loginFunction(e) {
     let loginUsername = document.getElementById('loginUsername').value, pwd = document.getElementById('pwd').value;
     let formData = JSON.parse(localStorage.getItem('formData')) || [];
