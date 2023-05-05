@@ -23,24 +23,26 @@
                     <img src="gp.png">
                 </div>
                 -->
-                <form onsubmit="loginFunction()" id="login" class="input-group">
-                    <input type="text" name="username" class="input-field" placeholder="Username" id="loginUsername" required>
-                    <input type="password" name="password" class="input-field" placeholder="Password" id="loginPassword" required>
+                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off">
+                    <input type="text" name="loginUsername" class="input-field" placeholder="Username" id="loginUsername" required>
+                    <input type="password" name="loginPassword" class="input-field" placeholder="Password" id="loginPassword" required>
                     <input type="checkbox" class="chech-box"><span>Remember Password</span>
                     <button type="submit" class="submit-btn">Login</button>
                     <p id="result">Welcome, Login...</p>
                 </form>
-                <form onsubmit="registerFunction(event)" id="register" class="input-group">
+
+                <form role="form" onsubmit="registerFunction(event)" id="register" class="input-group" autocomplete="off">
                     <input type="text" name="username" class="input-field" placeholder="Username" id="username" required>
                     <input type="email" name="email" class="input-field" placeholder="Email" id="email" required>
                     <input type="password" name="pwd" class="input-field" placeholder="Password" id="pwd" required>
                     <input type="checkbox" class="chech-box"><span>I agree to the terms & conditions</span>
                     <button type="submit" class="submit-btn">Register</button>
                 </form>
+
             </div>
         </div>
 
-        <script src="main.js">
+        <script src="register.js">
         </script>
 
     </body>
