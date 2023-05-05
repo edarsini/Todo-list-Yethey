@@ -109,6 +109,18 @@ main {background-color: #A7F5E7;
     transition: all 0.3s ease-in-out;
   }
 
+  body.dark .card{
+    background-color: black;
+    color: white;
+    border-color: white;
+    border-style: dashed;
+  }
+  
+  
+  body.dark input[type="radio"] {
+    filter: invert(1); /* invert the color of the radio button to white */
+  }  
+
   .toggle.active::before{
     background-color: var(--dark-bg-color);
     left: calc(100% - 30px - 10px);
