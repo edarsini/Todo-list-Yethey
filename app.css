@@ -96,6 +96,10 @@ main {background-color: #A7F5E7;
     margin-left: auto;
   }
 
+    #navbarNavAltMarkup {
+    margin-left: 20%;
+  }
+
   .toggle:before{
     content:"";
     position: absolute;

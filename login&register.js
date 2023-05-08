@@ -15,7 +15,7 @@ function login() {
     z.style.left = "0";
 }
 
-
+//Function for Registering a New User and saving it to local storage
 const registerFunction = e => {
     let username = document.getElementById('username').value,
         email = document.getElementById('email').value,
@@ -32,27 +32,28 @@ const registerFunction = e => {
             alert("Account Created.\n\nPlease Log In.");
             console.log(formData);
             document.querySelector('form').reset();
-            document.getElementById('loginUsername').focus();
+            document.getElementById('lusername').focus();
         }
         else{
             alert("Ooopppssss... Duplicate found!!!\nYou have already registered");
         }
             e.preventDefault();
 }
-    
+
+//Function for User to Log into their account and saving it to local storage
 function loginFunction(e) {
-    let loginUsername = document.getElementById('loginUsername').value, pwd = document.getElementById('pwd').value;
+    let lusername = document.getElementById('lusername').value, lpwd = document.getElementById('lpwd').value;
     let formData = JSON.parse(localStorage.getItem('formData')) || [];
     let exist = formData.length && 
-    JSON.parse(localStorage.getItem('formData')).some(data => data.username.toLowerCase() == loginUsername && data.pwd.toLowerCase() == loginPassword);
+    JSON.parse(localStorage.getItem('formData')).some(data => data.username.toLowerCase() == lusername && data.pwd.toLowerCase() == lpwd);
     if(!exist){
         alert("Incorrect login credentials");
         console.log('login not successful');
     }
     else{
-        location.href = "notes.html";
         alert("Welcome Back!");
         console.log('login successful');
+        window.location.href = "notes.html";
     }
     e.preventDefault();
 }
