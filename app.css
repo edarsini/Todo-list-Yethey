@@ -52,6 +52,7 @@ main {background-color: #A7F5E7;
 
     --dark-bg-color: #000000;
     --dark-text-color: #ffffff;
+    --grey-text-color: #333333;
   }
   
   /* theme */
@@ -73,6 +74,10 @@ main {background-color: #A7F5E7;
     justify-content: center;
     background-color: var(--bg-color);
     transition: all 0.3s ease-in-out;
+  }
+
+  #main-nav {
+    background-color: red;
   }
 
   body.dark{
@@ -124,6 +129,45 @@ main {background-color: #A7F5E7;
   body.dark input[type="radio"] {
     filter: invert(1); /* invert the color of the radio button to white */
   }  
+
+  /* profile dark mode */
+  /* leftside */
+  body.dark .p-4{
+    background-color: var(--dark-bg-color);
+    color: var(--dark-text-color)
+  }
+  
+  body.dark .nav.flex-column#v-pills-tab {
+    background-color: var(--dark-bg-color);
+    color: var(--dark-text-color); /* Default color for non-active links in dark mode */
+  }
+  
+  body.dark .profile-tab-nav {
+    background-color: var(--dark-bg-color);
+  }
+
+  /* right side */
+
+  body.dark section.text-black {
+    background-color: var(--grey-text-color);
+    color: var(--dark-text-color);
+    
+  }  
+
+  body.dark section.text-black .h1 {
+    color: var(--dark-text-color);
+  }
+
+  body.dark .tab-content{
+    background-color: var(--dark-bg-color);
+    color: var(--dark-text-color)
+  }
+
+  body.dark .form-control {
+    background-color: var(--grey-text-color); /* Change to the desired color, e.g., #333333 for black */
+    color: var(--dark-text-color); /* Change to the desired text color */
+  }
+  
 
   .toggle.active::before{
     background-color: var(--dark-bg-color);
