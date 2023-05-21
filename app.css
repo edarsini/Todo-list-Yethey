@@ -289,3 +289,17 @@ main {background-color: #A7F5E7;
     border-radius: 10px;
     cursor: pointer;
   }
+
+.flex-container {
+display: flex;
+}
+/*TASKS: To do column*/
+.noteColumn {
+  padding: 16px;
+  flex-grow: 1;
+  margin: 5px;
+  border: 1px solid #666666;
+  border-radius: 4px;
+}
+
+

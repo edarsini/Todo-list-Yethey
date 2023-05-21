@@ -4,6 +4,7 @@ let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
   let addTxt = document.getElementById("addTxt");
   const radioButtons = document.querySelectorAll('input[name="priority"]');
+  const dueDate = document.getElementById("taskDate");
   let notes = localStorage.getItem("notes");
   let selectedPriority;
   for (const radioButton of radioButtons) {
@@ -18,7 +19,7 @@ addBtn.addEventListener("click", function (e) {
   notesObj.push({
     text: addTxt.value,
     priority: selectedPriority.value,
-	date: new Date().toLocaleDateString()
+	date: dueDate.value
   });
   localStorage.setItem("notes", JSON.stringify(notesObj));
   addTxt.value = "";
@@ -57,18 +58,17 @@ function showNotes() {
       priorityImg = "low.png";
     }
 
-    html += `<div class="noteCard my-2 mx-2 card" 
-			style="width: 18rem;">
+    html += `<div class="noteCard my-2 mx-2 card"
+	style="max-width: 16rem; width: 100%;">
 				<div class="card-body">
 					<h5 class="card-title">
-						Note ${index + 1}
 						<img src = "${priorityImg}">
 					</h5>
 					<p class="card-text">
 						${note.text}
 					</p>
-					<p class="card-text">
-						${note.date}
+					<p class="card-text" style="color: #666666;">
+						Due ${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -205,18 +205,17 @@ function showInProgress() {
       priorityImg = "low.png";
     }
 
-    htmlInProgressNotes += `<div class="noteCard my-2 mx-2 card" 
-			style="width: 18rem;">
+    htmlInProgressNotes += `<div class="noteCard my-2 mx-2 card"
+	style="max-width: 16rem; width: 100%;">
 				<div class="card-body">
 					<h5 class="card-title">
-						In Progress ${index + 1}
 						<img src = "${priorityImg}">
 					</h5>
 					<p class="card-text">
 						${note.text}
 					</p>
-					<p class="card-text">
-						${note.date}
+					<p class="card-text" style="color: #666666;">
+						Due ${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -302,19 +301,18 @@ function moveNoteToCompleted(index) {
 		priorityImg = "low.png";
 	  }
   
-	  htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card" 
-			  style="width: 18rem;">
+	  htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card"
+	  style="max-width: 16rem; width: 100%;">
 				  <div class="card-body">
 					  <h5 class="card-title">
-						  Completed ${index + 1}
 						  <img src = "${priorityImg}">
 					  </h5>
 					  <p class="card-text">
 						  ${note.text}
 					  </p>
-					  <p class="card-text">
-						${note.date}
-					</p>
+					  <p class="card-text" style="color: #666666;">
+						  Due ${note.date}
+					  </p>
   
 				  <button id="${index}" onclick=
 					  "deleteNoteFromCompleted(this.id)"
