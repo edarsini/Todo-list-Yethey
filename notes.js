@@ -89,8 +89,7 @@ function showNotes() {
 
   if (notesObj.length != 0) notesElm.innerHTML = html;
   else
-    notesElm.innerHTML = `Nothing to show!
-		Use "Add a Note" section above to add notes.`;
+    notesElm.innerHTML = `Click "Add Task" button above to add tasks.`;
 }
 
 function moveNoteToInProgress(index) {
@@ -237,7 +236,7 @@ function showInProgress() {
   if (inProgressNotesObj.length != 0)
     inProgressNotesElm.innerHTML = htmlInProgressNotes;
   else
-    inProgressNotesElm.innerHTML = `No notes in progress!`;
+    inProgressNotesElm.innerHTML = `No tasks in progress!`;
 }
 
 function moveNoteToCompleted(index) {
@@ -328,7 +327,7 @@ function moveNoteToCompleted(index) {
 	if (completedNotesObj.length != 0)
 	  completedNotesElm.innerHTML = htmlCompletedNotes;
 	else
-	  completedNotesElm.innerHTML = `No completed notes yet!`;
+	  completedNotesElm.innerHTML = `No completed tasks yet!`;
   }
 
   function deleteNoteFromCompleted(index) {
