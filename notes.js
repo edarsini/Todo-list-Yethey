@@ -4,6 +4,7 @@ let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
   let addTxt = document.getElementById("addTxt");
   const radioButtons = document.querySelectorAll('input[name="priority"]');
+  const dueDate = document.getElementById("taskDate");
   let notes = localStorage.getItem("notes");
   let selectedPriority;
   for (const radioButton of radioButtons) {
@@ -18,7 +19,7 @@ addBtn.addEventListener("click", function (e) {
   notesObj.push({
     text: addTxt.value,
     priority: selectedPriority.value,
-	date: new Date().toLocaleDateString()
+	date: dueDate.value
   });
   localStorage.setItem("notes", JSON.stringify(notesObj));
   addTxt.value = "";
@@ -57,18 +58,17 @@ function showNotes() {
       priorityImg = "low.png";
     }
 
-    html += `<div class="noteCard my-2 mx-2 card" 
-			style="width: 18rem;">
+    html += `<div class="noteCard my-2 mx-2 card"
+	style="max-width: 16rem; width: 100%;">
 				<div class="card-body">
 					<h5 class="card-title">
-						Note ${index + 1}
 						<img src = "${priorityImg}">
 					</h5>
 					<p class="card-text">
 						${note.text}
 					</p>
-					<p class="card-text">
-						${note.date}
+					<p class="card-text" style="color: #666666;">
+						Due ${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -89,8 +89,7 @@ function showNotes() {
 
   if (notesObj.length != 0) notesElm.innerHTML = html;
   else
-    notesElm.innerHTML = `Nothing to show!
-		Use "Add a Note" section above to add notes.`;
+    notesElm.innerHTML = `Click "Add Task" button above to add tasks.`;
 }
 
 function moveNoteToInProgress(index) {
@@ -205,18 +204,17 @@ function showInProgress() {
       priorityImg = "low.png";
     }
 
-    htmlInProgressNotes += `<div class="noteCard my-2 mx-2 card" 
-			style="width: 18rem;">
+    htmlInProgressNotes += `<div class="noteCard my-2 mx-2 card"
+	style="max-width: 16rem; width: 100%;">
 				<div class="card-body">
 					<h5 class="card-title">
-						In Progress ${index + 1}
 						<img src = "${priorityImg}">
 					</h5>
 					<p class="card-text">
 						${note.text}
 					</p>
-					<p class="card-text">
-						${note.date}
+					<p class="card-text" style="color: #666666;">
+						Due ${note.date}
 					</p>
 
 				<button id="${index}" onclick=
@@ -238,7 +236,7 @@ function showInProgress() {
   if (inProgressNotesObj.length != 0)
     inProgressNotesElm.innerHTML = htmlInProgressNotes;
   else
-    inProgressNotesElm.innerHTML = `No notes in progress!`;
+    inProgressNotesElm.innerHTML = `No tasks in progress!`;
 }
 
 function moveNoteToCompleted(index) {
@@ -302,19 +300,18 @@ function moveNoteToCompleted(index) {
 		priorityImg = "low.png";
 	  }
   
-	  htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card" 
-			  style="width: 18rem;">
+	  htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card"
+	  style="max-width: 16rem; width: 100%;">
 				  <div class="card-body">
 					  <h5 class="card-title">
-						  Completed ${index + 1}
 						  <img src = "${priorityImg}">
 					  </h5>
 					  <p class="card-text">
 						  ${note.text}
 					  </p>
-					  <p class="card-text">
-						${note.date}
-					</p>
+					  <p class="card-text" style="color: #666666;">
+						  Due ${note.date}
+					  </p>
   
 				  <button id="${index}" onclick=
 					  "deleteNoteFromCompleted(this.id)"
@@ -330,7 +327,7 @@ function moveNoteToCompleted(index) {
 	if (completedNotesObj.length != 0)
 	  completedNotesElm.innerHTML = htmlCompletedNotes;
 	else
-	  completedNotesElm.innerHTML = `No completed notes yet!`;
+	  completedNotesElm.innerHTML = `No completed tasks yet!`;
   }
 
   function deleteNoteFromCompleted(index) {

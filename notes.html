@@ -34,14 +34,18 @@
       </nav>
       
       <div class="container my-3">
-        <h1>Take your Notes here</h1>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Add a Note</h5>
+            <h5 class="card-title">Add a task</h5>
             <div class="form-group">
               <textarea class="form-control" id="addTxt" rows="3"> </textarea>
             </div>
-          </div>
+            <div class="form-group">
+              <label for="taskDate">Due date:</label>
+              <input type="date" class="form-control" id="taskDate" name="taskDate">
+            </div>
+          <div>
+            Priority:
           <ul>
             <input type="radio" id="priorityLow" name="priority" value="low" checked/>
             <label for="low">Low</label>
@@ -52,34 +56,49 @@
             <input type="radio" id="priorityHigh" name="priority" value="high" />
             <label for="high">High</label>
           </ul>
+        </div>
+          </div>
           <button
             class="btn btn-primary"
             id="addBtn"
-            style="background-color: green"
+            style="background-color: rgb(0, 9, 128)"
           >
-            Add Note
+            Add Task
           </button>
         </div>
         <hr />
-        <h1>Your Notes</h1>
+        <h1>Your Tasks</h1>
         <hr />
 
-        <div class="row container-fluid">
+        <div class="container-fluid">
           <div class="row">
-            <div class="col-sm">
-              TO DO
-              <div id = "notes"></div>
+            <div class="col-md-4 col-sm-6 d-flex justify-content-center" style="min-width: 18rem;">
+              <div class="column-wrapper" style="min-width: 18rem;">
+                <div class="noteColumn" style="background-color: #AED4FF;">
+                  <h6>Todo</h6>
+                  <div id="notes"></div>
+                </div>
+              </div>
             </div>
-            <div class="col-sm">
-              IN PROGRESS
-              <div id = "noteInProgress"></div>
+            <div class="col-md-4 col-sm-6 d-flex justify-content-center" style="min-width: 18rem;">
+              <div class="column-wrapper" style="min-width: 18rem;">
+                <div class="noteColumn" style="background-color: #ECF7AC;">
+                  <h6>In Progress</h6>
+                  <div id="noteInProgress"></div>
+                </div>
+              </div>
             </div>
-            <div class="col-sm">
-              COMPLETED
-              <div id = "noteComplete"></div>
+            <div class="col-md-4 col-sm-6 d-flex justify-content-center" style="min-width: 18rem;">
+              <div class="column-wrapper" style="min-width: 18rem;">
+                <div class="noteColumn" style="background-color: #C4FFA8;">
+                  <h6>Completed</h6>
+                  <div id="noteComplete"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
       <p>Thanks for visiting!</p>
 
