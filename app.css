@@ -304,6 +304,7 @@ display: flex;
 
 .delete-button {
   background-image: url('delete-button.png');
+  background-color: #fefefe;
   border-radius: 50%;
   padding: 0;
   height: 24px;
@@ -315,8 +316,23 @@ display: flex;
   top: 8px;
 }
 
+.edit-button {
+  background-image: url('edit-button.png');
+  background-color: #fefefe;
+  border-radius: 50%;
+  padding: 0;
+  height: 24px;
+  width: 24px;
+  border: none;
+  align-items: center;
+  position: absolute;
+  right: 38px;
+  top: 8px;
+}
+
 .move-button {
   background-image: url('move-button.png');
+  background-color: #fefefe;
   border-radius: 50%;
   padding: 0;
   height: 24px;
@@ -330,6 +346,7 @@ display: flex;
 
 .done-button {
   background-image: url('done-button.png');
+  background-color: #fefefe;
   border-radius: 50%;
   padding: 0;
   height: 24px;
