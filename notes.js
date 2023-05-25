@@ -100,8 +100,12 @@ function showNotes() {
     }
 
     html += `<div class="noteCard my-2 mx-2 card"
-	style="max-width: 16rem; width: 100%;">
+	style="max-width: 16rem; width: 100%; border-radius: 10px; border: 1px solid #666666;">
 				<div class="card-body">
+        <button id="${index}" onclick=
+          "editNote(this.id)"
+          class="edit-button">
+        </button>
 				<button id="${index}" onclick=
 					"deleteNote(this.id)"
 					class="delete-button">
@@ -128,6 +132,38 @@ function showNotes() {
   if (notesObj.length != 0) notesElm.innerHTML = html;
   else notesElm.innerHTML = `Click "Add Task" button above to add tasks.`;
 }
+
+function editNote(index) {
+  let notes = localStorage.getItem("notes");
+
+  if (notes == null) notesObj = [];
+  else notesObj = JSON.parse(notes);
+
+  const priorityValues = {
+    high: 3,
+    medium: 2,
+    low: 1,
+  };
+
+  // sort notesObj based on priority
+  notesObj.sort(function (a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
+  // Retrieve the note object using the index
+  let note = notesObj[index];
+
+  // Display a prompt to edit the note's text
+  const editedText = prompt("Edit the task:", note.text);
+
+  // Update the note's text if the user entered a new value
+  if (editedText) {
+    note.text = editedText;
+    localStorage.setItem("notes", JSON.stringify(notesObj));
+  }
+  showNotes();
+}
+
 
 function moveNoteToInProgress(index) {
   let notes = localStorage.getItem("notes");
@@ -188,30 +224,6 @@ function deleteNote(index) {
   showNotes();
 }
 
-function deleteNoteFromInProgress(index) {
-  let inProgressNotes = localStorage.getItem("noteInProgress");
-
-  if (inProgressNotes == null) inProgressNotesObj = [];
-  else inProgressNotesObj = JSON.parse(inProgressNotes);
-
-  const priorityValues = {
-    high: 3,
-    medium: 2,
-    low: 1,
-  };
-
-  // sort notesObj based on priority
-  inProgressNotesObj.sort(function (a, b) {
-    return priorityValues[b.priority] - priorityValues[a.priority];
-  });
-
-  inProgressNotesObj.splice(index, 1);
-
-  localStorage.setItem("noteInProgress", JSON.stringify(inProgressNotesObj));
-
-  showInProgress();
-}
-
 function showInProgress() {
   showCompleted();
   let inProgressNotes = localStorage.getItem("noteInProgress");
@@ -242,11 +254,15 @@ function showInProgress() {
     }
 
     htmlInProgressNotes += `<div class="noteCard my-2 mx-2 card"
-	style="max-width: 16rem; width: 100%;">
+	style="max-width: 16rem; width: 100%; border-radius: 10px; border: 1px solid #666666;">
 				<div class="card-body">
 					<h5 class="card-title">
 						<img src = "${priorityImg}">
 					</h5>
+        <button id="${index}" onclick=
+          "editNoteInProgress(this.id)"
+          class="edit-button">
+        </button>
 					<p class="card-text">
 						${note.text}
 					</p>
@@ -271,6 +287,61 @@ function showInProgress() {
   if (inProgressNotesObj.length != 0)
     inProgressNotesElm.innerHTML = htmlInProgressNotes;
   else inProgressNotesElm.innerHTML = `No tasks in progress!`;
+}
+
+function deleteNoteFromInProgress(index) {
+  let inProgressNotes = localStorage.getItem("noteInProgress");
+
+  if (inProgressNotes == null) inProgressNotesObj = [];
+  else inProgressNotesObj = JSON.parse(inProgressNotes);
+
+  const priorityValues = {
+    high: 3,
+    medium: 2,
+    low: 1,
+  };
+
+  // sort notesObj based on priority
+  inProgressNotesObj.sort(function (a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
+  inProgressNotesObj.splice(index, 1);
+
+  localStorage.setItem("noteInProgress", JSON.stringify(inProgressNotesObj));
+
+  showInProgress();
+}
+
+function editNoteInProgress(index) {
+  let inProgressNotes = localStorage.getItem("noteInProgress");
+
+  if (inProgressNotes == null) inProgressNotesObj = [];
+  else inProgressNotesObj = JSON.parse(inProgressNotes);
+
+  const priorityValues = {
+    high: 3,
+    medium: 2,
+    low: 1,
+  };
+
+  // sort notesObj based on priority
+  inProgressNotesObj.sort(function (a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
+  // Retrieve the note object using the index
+  let note = inProgressNotesObj[index];
+
+  // Display a prompt to edit the note's text
+  const editedText = prompt("Edit the task:", note.text);
+
+  // Update the note's text if the user entered a new value
+  if (editedText) {
+    note.text = editedText;
+    localStorage.setItem("noteInProgress", JSON.stringify(inProgressNotesObj));
+  }
+  showNotes();
 }
 
 function moveNoteToCompleted(index) {
@@ -335,11 +406,15 @@ function showCompleted() {
     }
 
     htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card"
-	  style="max-width: 16rem; width: 100%;">
+	  style="max-width: 16rem; width: 100%; border-radius: 10px; border: 1px solid #666666;">
 				  <div class="card-body">
 					  <h5 class="card-title">
 						  <img src = "${priorityImg}">
 					  </h5>
+            <button id="${index}" onclick=
+          "editNoteCompleted(this.id)"
+          class="edit-button">
+        </button>
 					  <p class="card-text">
 						  ${note.text}
 					  </p>
@@ -360,6 +435,37 @@ function showCompleted() {
   if (completedNotesObj.length != 0)
     completedNotesElm.innerHTML = htmlCompletedNotes;
   else completedNotesElm.innerHTML = `No completed tasks yet!`;
+}
+
+function editNoteCompleted(index) {
+  let completedNotes = localStorage.getItem("noteComplete");
+
+  if (completedNotes == null) completedNotes = [];
+  else completedNotes = JSON.parse(completedNotes);
+
+  const priorityValues = {
+    high: 3,
+    medium: 2,
+    low: 1,
+  };
+
+  // sort notesObj based on priority
+  completedNotesObj.sort(function (a, b) {
+    return priorityValues[b.priority] - priorityValues[a.priority];
+  });
+
+  // Retrieve the note object using the index
+  let note = completedNotesObj[index];
+
+  // Display a prompt to edit the note's text
+  const editedText = prompt("Edit the task:", note.text);
+
+  // Update the note's text if the user entered a new value
+  if (editedText) {
+    note.text = editedText;
+    localStorage.setItem("noteComplete", JSON.stringify(completedNotesObj));
+  }
+  showNotes();
 }
 
 function deleteNoteFromCompleted(index) {
