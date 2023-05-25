@@ -15,45 +15,45 @@ function login() {
     z.style.left = "0";
 }
 
-//Function for Registering a New User and saving it to local storage
-const registerFunction = e => {
-    let username = document.getElementById('username').value,
-        email = document.getElementById('email').value,
-        pwd = document.getElementById('pwd').value;
+// //Function for Registering a New User and saving it to local storage
+// const registerFunction = e => {
+//     let username = document.getElementById('username').value,
+//         email = document.getElementById('email').value,
+//         pwd = document.getElementById('pwd').value;
 
-        let formData = JSON.parse(localStorage.getItem('formData')) || [];
+//         let formData = JSON.parse(localStorage.getItem('formData')) || [];
 
-        let exist = formData.length && JSON.parse(localStorage.getItem('formData')).some(data => 
-            data.username.toLowerCase() == username.toLowerCase());
+//         let exist = formData.length && JSON.parse(localStorage.getItem('formData')).some(data => 
+//             data.username.toLowerCase() == username.toLowerCase());
             
-        if(!exist){
-            formData.push({ username, email, pwd });
-            localStorage.setItem('formData', JSON.stringify(formData));
-            alert("Account Created.\n\nPlease Log In.");
-            console.log(formData);
-            document.querySelector('form').reset();
-            document.getElementById('lusername').focus();
-        }
-        else{
-            alert("Ooopppssss... Duplicate found!!!\nYou have already registered");
-        }
-            e.preventDefault();
-}
+//         if(!exist){
+//             formData.push({ username, email, pwd });
+//             localStorage.setItem('formData', JSON.stringify(formData));
+//             alert("Account Created.\n\nPlease Log In.");
+//             console.log(formData);
+//             document.querySelector('form').reset();
+//             document.getElementById('lusername').focus();
+//         }
+//         else{
+//             alert("Ooopppssss... Duplicate found!!!\nYou have already registered");
+//         }
+//             e.preventDefault();
+// }
 
-//Function for User to Log into their account and saving it to local storage
-function loginFunction(e) {
-    let lusername = document.getElementById('lusername').value, lpwd = document.getElementById('lpwd').value;
-    let formData = JSON.parse(localStorage.getItem('formData')) || [];
-    let exist = formData.length && 
-    JSON.parse(localStorage.getItem('formData')).some(data => data.username.toLowerCase() == lusername && data.pwd.toLowerCase() == lpwd);
-    if(!exist){
-        alert("Incorrect login credentials");
-        console.log('login not successful');
-    }
-    else{
-        alert("Welcome Back!");
-        console.log('login successful');
-        window.location.href = "notes.html";
-    }
-    e.preventDefault();
-}
+// //Function for User to Log into their account and saving it to local storage
+// function loginFunction(e) {
+//     let lusername = document.getElementById('lusername').value, lpwd = document.getElementById('lpwd').value;
+//     let formData = JSON.parse(localStorage.getItem('formData')) || [];
+//     let exist = formData.length && 
+//     JSON.parse(localStorage.getItem('formData')).some(data => data.username.toLowerCase() == lusername && data.pwd.toLowerCase() == lpwd);
+//     if(!exist){
+//         alert("Incorrect login credentials");
+//         console.log('login not successful');
+//     }
+//     else{
+//         alert("Welcome Back!");
+//         console.log('login successful');
+//         window.location.href = "notes.html";
+//     }
+//     e.preventDefault();
+// }

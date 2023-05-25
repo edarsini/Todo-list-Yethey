@@ -26,7 +26,7 @@
                     <img src="gp.png">
                 </div>
                 -->
-                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off">
+                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off" action="process.php" method="post">
                     <input type="text" name="lusername" class="input-field" placeholder="Username" id="lusername" required>
                     <input type="password" name="lpwd" class="input-field" placeholder="Password" id="lpwd" required>
                     <input type="checkbox" class="chech-box"><span>Remember Password</span>
@@ -34,10 +34,10 @@
                     <p id="result">Welcome, Login...</p>
                 </form>
 
-                <form role="form" onsubmit="registerFunction(event)" id="register" class="input-group" autocomplete="off">
+                <form role="form" onsubmit="registerFunction(event)" id="register" class="input-group" autocomplete="off" action="process.php" method="post">
                     <input type="text" name="username" class="input-field" placeholder="Username" id="username" required>
                     <input type="email" name="email" class="input-field" placeholder="Email" id="email" required>
-                    <input type="password" name="pwd" class="input-field" placeholder="Password" id="pwd" required>
+                    <input type="password" name="password" class="input-field" placeholder="Password" id="pwd" required>
                     <input type="checkbox" class="chech-box"><span>I agree to the terms & conditions</span>
                     <button type="submit" class="submit-btn">Register</button>
                 </form>
