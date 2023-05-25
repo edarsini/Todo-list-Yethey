@@ -1,3 +1,31 @@
+<?php
+session_start();
+
+    include("connections.php");
+    include("functions.php");
+
+    if($_SERVER['REQUEST_METHOD'] == "POST")
+    {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        if(!empty($username) && !empty($password) && !is_numeric($username)) 
+        {
+            //save to database
+            $query = "insert into registration (username, email, password) values ('$username', '$email', '$password')";
+            mysqli_query($con,$query);
+            header("Location: index.php");
+            die;
+        }
+        else
+        {
+            echo "Please enter some valid information!";
+        }
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +54,7 @@
                     <img src="gp.png">
                 </div>
                 -->
-                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off" action="process.php" method="post">
+                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off" method="post">
                     <input type="text" name="lusername" class="input-field" placeholder="Username" id="lusername" required>
                     <input type="password" name="lpwd" class="input-field" placeholder="Password" id="lpwd" required>
                     <input type="checkbox" class="chech-box"><span>Remember Password</span>
@@ -34,7 +62,7 @@
                     <p id="result">Welcome, Login...</p>
                 </form>
 
-                <form role="form" onsubmit="registerFunction(event)" id="register" class="input-group" autocomplete="off" action="process.php" method="post">
+                <form role="form" onsubmit="registerFunction(event)" id="register" class="input-group" autocomplete="off" method="post">
                     <input type="text" name="username" class="input-field" placeholder="Username" id="username" required>
                     <input type="email" name="email" class="input-field" placeholder="Email" id="email" required>
                     <input type="password" name="password" class="input-field" placeholder="Password" id="pwd" required>
