@@ -404,7 +404,7 @@ function showCompleted() {
     } else {
       priorityImg = "low.png";
     }
-
+    
     htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card"
 	  style="max-width: 16rem; width: 100%; border-radius: 10px; border: 1px solid #666666;">
 				  <div class="card-body">
