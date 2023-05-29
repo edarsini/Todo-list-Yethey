@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+    include("connections.php");
+    include("functions.php");
+
+    $user_data = check_login($con);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +37,7 @@
             </div>
           </div>
         </nav>
-      
+      <section class="text-black mt-3 p-5">
       <div class="container1">
       <a href="profile.html" style="text-decoration: none;">
       <div style="display: flex; align-items: center;">
@@ -90,7 +99,8 @@
             <hr/>
             <p class="text-center"><em>Copyright &copy; 2023 To Do List Yethey!&nbsp;
             <!--<a href="mailto:khiruba@sangkari.com">khiruba@sangkari.com</a></em></p>-->
-        </div>                    
+        </div>   
+      </section>                 
         </footer>
     </div>
     <!-- Include Bootstrap Javascript plugin-->
