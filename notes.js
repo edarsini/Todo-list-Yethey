@@ -1,55 +1,82 @@
-showNotes();
-//Date in the input is auto to the next day
-const currentDate = new Date();
-const nextDay = new Date(currentDate);
-nextDay.setDate(currentDate.getDate() + 1);
-const formattedNextDay = nextDay.toISOString().split("T")[0];
-// Set the value of the input field to the next day
-document.getElementById("taskDate").value = formattedNextDay;
+const firebaseConfig = {
+  apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
+  authDomain: "task-it-aa92b.firebaseapp.com",
+  databaseURL: "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "task-it-aa92b",
+  storageBucket: "task-it-aa92b.appspot.com",
+  messagingSenderId: "704129947151",
+  appId: "1:704129947151:web:65be9515384b4b0462357a",
+  measurementId: "G-231G5FKB49"
+}
 
-// If user adds a note, add it to the localStorage
-let addBtn = document.getElementById("addBtn");
-addBtn.addEventListener("click", function (e) {
-  let addTxt = document.getElementById("addTxt");
-  const radioButtons = document.querySelectorAll('input[name="priority"]');
-  const dueDate = document.getElementById("taskDate");
-  const currentDate = new Date(); //Get the current date
-  const selectedDate = new Date(dueDate.value); //Get the inputted date
-  //Error message if the user inputs a date in the past
-  if (selectedDate < currentDate) {
-    const errorMessage = "Please select a date in the future !";
-    displayErrorModal(errorMessage);
-  }
-  //Continues with the program if date is correct
-  else {
-    let notes = localStorage.getItem("notes");
-    let selectedPriority;
-    for (const radioButton of radioButtons) {
-      if (radioButton.checked) {
-        selectedPriority = radioButton;
-        break;
-      }
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+initializeNotes();
+function initializeNotes() {
+  showNotes();
+
+  const currentDate = new Date();
+  const nextDay = new Date(currentDate);
+  nextDay.setDate(currentDate.getDate() + 1);
+  const formattedNextDay = nextDay.toISOString().split("T")[0];
+  // Set the value of the input field to the next day
+  document.getElementById("taskDate").value = formattedNextDay;
+
+  // If user adds a note, add it to the localStorage
+  let addBtn = document.getElementById("addBtn");
+  addBtn.addEventListener("click", function (e) {
+    let addTxt = document.getElementById("addTxt");
+    const radioButtons = document.querySelectorAll('input[name="priority"]');
+    const dueDate = document.getElementById("taskDate");
+    const currentDate = new Date(); //Get the current date
+    const selectedDate = new Date(dueDate.value); //Get the inputted date
+    // Error message if the user inputs a date in the past
+    if (selectedDate < currentDate) {
+      const errorMessage = "Please select a date in the future !";
+      displayErrorModal(errorMessage);
     }
+    // Continues with the program if date is correct
+    else {
+      let notes = localStorage.getItem("notes");
+      let selectedPriority;
+      for (const radioButton of radioButtons) {
+        if (radioButton.checked) {
+          selectedPriority = radioButton;
+          break;
+        }
+      }
 
-    if (notes == null) notesObj = [];
-    else notesObj = JSON.parse(notes);
-    const formattedDate = new Date(dueDate.value).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-    notesObj.push({
+      if (notes == null) notesObj = [];
+      else notesObj = JSON.parse(notes);
+      const formattedDate = new Date(dueDate.value).toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }
+      );
+      notesObj.push({
+        text: addTxt.value,
+        priority: selectedPriority.value,
+        date: formattedDate,
+      });
+      const notesRef = db.ref("Notes");
+      notesRef.push({
       text: addTxt.value,
       priority: selectedPriority.value,
       date: formattedDate,
-    });
-    localStorage.setItem("notes", JSON.stringify(notesObj));
-  }
+      });
+      localStorage.setItem("notes", JSON.stringify(notesObj));
+    }
 
-  addTxt.value = "";
+    addTxt.value = "";
 
-  showNotes();
-});
+    showNotes();
+  });
+}
 
 //Function to display error message if date is in the past
 function displayErrorModal(message) {
@@ -163,7 +190,6 @@ function editNote(index) {
   }
   showNotes();
 }
-
 
 function moveNoteToInProgress(index) {
   let notes = localStorage.getItem("notes");
@@ -404,7 +430,7 @@ function showCompleted() {
     } else {
       priorityImg = "low.png";
     }
-    
+
     htmlCompletedNotes += `<div class="noteCard my-2 mx-2 card"
 	  style="max-width: 16rem; width: 100%; border-radius: 10px; border: 1px solid #666666;">
 				  <div class="card-body">
