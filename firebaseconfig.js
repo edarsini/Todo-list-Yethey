@@ -2,8 +2,7 @@
 const firebaseConfig = {
     apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
     authDomain: "task-it-aa92b.firebaseapp.com",
-    databaseURL:
-      "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL: "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "task-it-aa92b",
     storageBucket: "task-it-aa92b.appspot.com",
     messagingSenderId: "704129947151",

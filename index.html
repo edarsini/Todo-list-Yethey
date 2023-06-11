@@ -35,61 +35,60 @@
 
             </div>
         </div>
-
-        <script src="login&register.js"></script>
         <script type="module">
             // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js";
-            import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js";
-            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js";
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+            import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
-        
-            // Firebase Configurations
+          
+            // Your web app's Firebase configuration
             const firebaseConfig = {
-            apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
-            authDomain: "task-it-aa92b.firebaseapp.com",
-            databaseURL:
-              "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "task-it-aa92b",
-            storageBucket: "task-it-aa92b.appspot.com",
-            messagingSenderId: "704129947151",
-            appId: "1:704129947151:web:65be9515384b4b0462357a",
-            measurementId: "G-231G5FKB49",
-          };
+              apiKey: "AIzaSyBX9TGlYHuziXIz6KhOHB8uMYcfuWDcvno",
+              authDomain: "authentication-app-ad8e1.firebaseapp.com",
+              databaseURL: "https://authentication-app-ad8e1-default-rtdb.asia-southeast1.firebasedatabase.app",
+              projectId: "authentication-app-ad8e1",
+              storageBucket: "authentication-app-ad8e1.appspot.com",
+              messagingSenderId: "209532492643",
+              appId: "1:209532492643:web:3661a7215f4def080bd156"
+            };
+          
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
-            const database = getDatabase(app);
+            const database = getDatabase(app)
             const auth = getAuth();
-    
-            registerBtn.addEventListener('click',(e) => {
-    
-                var username = getElementById('username').value;
-                var email = getElementById('email').value;
-                var password = getElementById('pwd').value;
-    
-                createUserWithEmailAndPassword(auth, email, password)
+
+            registerBtn.addEventListener('click', (e) => {
+
+                var username = document.getElementById("username").value;
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("pwd").value;
+
+            createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-    
+
                     set(ref(database, 'users/' + user.uid),{
                         username: username,
                         email: email
                     })
-                    alert('user created!');
+
+                    alert("Account Created.\n\nPlease Log In.");
                     // ...
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
-    
+
                     alert(errorMessage);
                     // ..
                 });
             });
-    
           </script>
-    
+
+        <script src="login&register.js"></script>
+
     </body>
 </html>
