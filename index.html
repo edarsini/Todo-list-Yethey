@@ -59,7 +59,7 @@
             const database = getDatabase(app)
             const auth = getAuth();
 
-            registerBtn.addEventListener('click', (e) => {
+            document.getElementById("register").addEventListener('submit', (e) => {
 
                 var username = document.getElementById("username").value;
                 var email = document.getElementById("email").value;
