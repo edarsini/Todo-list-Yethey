@@ -4,6 +4,13 @@
     font-family: sans-serif;
   }
   
+  #title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   .super {
     height: 100%;
     width: 100%;
@@ -15,13 +22,15 @@
     
   .form-box {
     width: 380px;
-    height: 450px;
-    position: relative;
+    height: auto;
     margin: 7% auto;
     background: #FFFFFF;
-    padding: 5px;
+    padding: 20px;
     overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   }
+  
   
   .button-box {
     width: 220px;
@@ -30,6 +39,7 @@
     box-shadow: 0 0 20px 9px #ff61241f;
     border-radius: 30px;
     padding: 10px 0;
+    text-align: center;
   }  
   
   .toggle-btn {
@@ -52,8 +62,13 @@
     transition: 0.5s;
   }
   
+  .custom-btn{
+    background: linear-gradient(to right, #ff105f, #ffad06);
+    border-color: #ff105f; /* Optional: Change the border color if needed */
+    color: white;
+  }
+
   .input-group {
-    top: 150px;
     position: absolute;
     width: 280px;
     transition: 0.5s;
