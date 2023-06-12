@@ -17,7 +17,8 @@
                     <button type="button" class="toggle-btn" onclick="register()">Register</button>
                 </div>
                 
-                <form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off">
+                <!--<form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off">-->
+                    <form role="form" id="login" class="input-group" autocomplete="off">
                     <input type="text" name="lusername" class="input-field" placeholder="Username" id="lusername" required>
                     <input type="password" name="lpwd" class="input-field" placeholder="Password" id="lpwd" required>
                     <input type="checkbox" class="chech-box"><span>Remember Password</span> 
@@ -38,8 +39,8 @@
         <script type="module">
             // Import the functions you need from the SDKs you need
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-            import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+            import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+            import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
           
@@ -60,6 +61,7 @@
             const auth = getAuth();
 
             document.getElementById("register").addEventListener('submit', (e) => {
+                e.preventDefault();
 
                 var username = document.getElementById("username").value;
                 var email = document.getElementById("email").value;
@@ -67,7 +69,7 @@
 
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Signed in 
+                    // If user credentials are valid and new user is created 
                     const user = userCredential.user;
 
                     set(ref(database, 'users/' + user.uid),{
@@ -76,16 +78,79 @@
                     })
 
                     alert("Account Created.\n\nPlease Log In.");
-                    // ...
+                    // resets the register form
+                    document.getElementById('register').reset();
+                    // goes to the login username input field
+                    document.getElementById('lusername').focus();
                 })
+                // If user credentials are not valid and new user is not created
                 .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
 
-                    alert(errorMessage);
-                    // ..
+                    alert("Sorry, Account Failed to be Created.\nPlease try again");
+
                 });
             });
+
+            document.getElementById("login").addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                var username = document.getElementById("lusername").value;
+                var password = document.getElementById("lpwd").value;
+
+            // Fetch the user's email based on the provided username
+            const usersRef = ref(database, 'users');
+            const query = orderByChild(usersRef, 'username').equalTo(username);
+            
+            get(query)
+                .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userId = Object.keys(snapshot.val())[0];
+                    const email = snapshot.val()[userId].email;
+
+                    signInWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            // If user credentials are valid and user is logged in
+                            const user = userCredential.user;
+
+                            const date = new Date();
+                            update(ref(database, 'users/' + user.uid),{
+                                last_login: date,
+                            });
+                            // 
+                            alert("User Logged In.\n\nWelcome to TaskIt!.");
+                        })
+                        // If user credentials are not valid and user is not logged in
+                        .catch((error) => {
+
+                            alert("Sorry, Login Failed.\nPlease try again");
+
+                        });
+                    }else{
+                        // User with the provided username does not exist
+                        alert("Sorry, Login Failed.\nPlease try again");
+                    }
+                })
+                .catch((error) => {
+                    // Error while fetching user data
+                    alert("Sorry, Login Failed.\nPlease try again");
+                });
+            });
+
+            const user = auth.currentUser;
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in, see docs for a list of available properties
+                    // https://firebase.google.com/docs/reference/js/auth.user
+                    const uid = user.uid;
+                    //window.location.href = "notes.html";
+
+                    // ...
+                } else {
+                    // User is signed out
+                    // ...
+                }
+                });
+
           </script>
 
         <script src="login&register.js"></script>
