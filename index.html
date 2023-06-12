@@ -1,63 +1,63 @@
-<?php
-session_start();
+<!-- <?php
+// session_start();
 
-    include("connections.php");
-    include("functions.php");
+//     include("connections.php");
+//     include("functions.php");
 
-    if($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $username = $_POST['username'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+//     if($_SERVER['REQUEST_METHOD'] == "POST")
+//     {
+//         $username = $_POST['username'];
+//         $firstname = $_POST['firstname'];
+//         $lastname = $_POST['lastname'];
+//         $email = $_POST['email'];
+//         $password = $_POST['password'];
         
 
-        if(!empty($username) && !empty($firstname) && !empty($lastname) && !empty($password) && !is_numeric($username)) 
-        {
-            //save to database
-            $query = "insert into registration (username, firstname, lastname, email, password) values ('$username', '$firstname', '$lastname', '$email', '$password')";
-            mysqli_query($con,$query);
-            header("Location: index.php");
-            die;
-        }
-        else
-        {
-            echo "Please enter some valid information!";
-        }
-    }
+//         if(!empty($username) && !empty($firstname) && !empty($lastname) && !empty($password) && !is_numeric($username)) 
+//         {
+//             //save to database
+//             $query = "insert into users (username, firstname, lastname, email, password) values ('$username', '$firstname', '$lastname', '$email', '$password')";
+//             mysqli_query($con,$query);
+//             header("Location: index.php");
+//             die;
+//         }
+//         else
+//         {
+//             echo "Please enter some valid information!";
+//         }
+//     }
 
-    if($_SERVER['REQUEST_METHOD'] == "POST")
-    {
-        $username = $_POST['lusername'];
-        $password = $_POST['lpwd'];
+//     if($_SERVER['REQUEST_METHOD'] == "POST")
+//     {
+//         $username = $_POST['username'];
+//         $password = $_POST['password'];
 
-        if(!empty($username) && !empty($password) && !is_numeric($username)) 
-        {
-            //read from database
-            $query = "select * from registration where username = '$username' limit 1";
-            $result = mysqli_query($con,$query);
+//         if(!empty($username) && !empty($password) && !is_numeric($username)) 
+//         {
+//             //read from database
+//             $query = "select * from registration where username = '$username' limit 1";
+//             $result = mysqli_query($con,$query);
 
-            if($result)
-            {
-                if($result && mysqli_num_rows($result)>0)
-                {
-                    $user_data = mysqli_fetch_assoc($result);
-                    if($user_data['password'] === $password)
-                    {
-                        header("Location: notes.html");
-                        die;
-                    }
-                }
-            }
+//             if($result)
+//             {
+//                 if($result && mysqli_num_rows($result)>0)
+//                 {
+//                     $user_data = mysqli_fetch_assoc($result);
+//                     if($user_data['password'] === $password)
+//                     {
+//                         header("Location: notes.html");
+//                         die;
+//                     }
+//                 }
+//             }
             
-        }
-        else
-        {
-            echo "Please enter some valid information!";
-        }
-    }
-?>
+//         }
+//         else
+//         {
+//             echo "Please enter some valid information!";
+//         }
+//     }
+?> -->
 
 
 <!DOCTYPE html>
