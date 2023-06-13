@@ -14,6 +14,19 @@ function login() {
     y.style.left = "450px";
     z.style.left = "0";
 }
+//Function for state:
+// const user = auth.currentUser;
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//        const uid = user.uid;
+//        //window.location.href = "notes.html";
+
+//    } else {
+        // User is signed out
+        // ...
+//    }
+//    });
+
 
 // //Function for Registering a New User and saving it to local storage
 // const registerFunction = e => {

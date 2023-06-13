@@ -19,7 +19,7 @@
                 
                 <!--<form role="form" onsubmit="loginFunction(event)" id="login" class="input-group" autocomplete="off">-->
                     <form role="form" id="login" class="input-group" autocomplete="off">
-                    <input type="text" name="lusername" class="input-field" placeholder="Username" id="lusername" required>
+                    <input type="email" name="lemail" class="input-field" placeholder="Email" id="lemail" required>
                     <input type="password" name="lpwd" class="input-field" placeholder="Password" id="lpwd" required>
                     <input type="checkbox" class="chech-box"><span>Remember Password</span> 
                     <button type="submit" id="loginBtn" class="submit-btn">Login</button>
@@ -36,7 +36,89 @@
 
             </div>
         </div>
-        <script type="module">
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        
+        <script>
+        // Using version 8.10.1
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
+            authDomain: "task-it-aa92b.firebaseapp.com",
+            databaseURL: "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "task-it-aa92b",
+            storageBucket: "task-it-aa92b.appspot.com",
+            messagingSenderId: "704129947151",
+            appId: "1:704129947151:web:65be9515384b4b0462357a",
+            measurementId: "G-231G5FKB49",
+        };
+        
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+          const db = firebase.database();
+          const auth = firebase.auth();
+        
+          document.getElementById("register").addEventListener('submit', (e) => {
+            e.preventDefault();
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("pwd").value;
+        
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+              .then((userCredential) => {
+                // If user credentials are valid and new user is created 
+                const user = userCredential.user;
+        
+                if (user) {
+                  db.ref('users/' + user.uid).set({
+                    username: username,
+                    email: email
+                  });
+        
+                  alert("Account Created.\n\nPlease Log In.");
+                  // resets the register form
+                  document.getElementById('register').reset();
+                  // goes to the login username input field
+                  document.getElementById('lusername').focus();
+                } else {
+                  alert("Sorry, Account Failed to be Created.\nPlease try again");
+                }
+              });
+          });
+        
+          document.getElementById("login").addEventListener('submit', (e) => {
+            e.preventDefault();
+        
+            var email = document.getElementById("lemail").value;
+            var password = document.getElementById("lpwd").value;
+        
+            firebase.auth().signInWithEmailAndPassword(email, password)
+              .then((userCredential) => {
+                // If user credentials are valid and user is logged in
+                const user = userCredential.user;
+        
+                const date = new Date();
+                db.ref('users/' + user.uid).update({
+                  last_login: date,
+                });
+                // 
+                alert("User Logged In.\n\nWelcome to TaskIt!.");
+                window.location.href = "notes.html";
+        
+              })
+              // If user credentials are not valid and user is not logged in
+              .catch((error) => {
+                alert("Sorry, Login Failed.\nPlease try again");
+              });
+          });
+        </script>
+        
+        <script src="login&register.js"></script>
+
+        
+        <!--Trial version using Version 9.22.2:
+            <script type="module">
             // Import the functions you need from the SDKs you need
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
             import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
@@ -62,7 +144,6 @@
 
             document.getElementById("register").addEventListener('submit', (e) => {
                 e.preventDefault();
-
                 var username = document.getElementById("username").value;
                 var email = document.getElementById("email").value;
                 var password = document.getElementById("pwd").value;
@@ -72,88 +153,55 @@
                     // If user credentials are valid and new user is created 
                     const user = userCredential.user;
 
-                    set(ref(database, 'users/' + user.uid),{
+                    if (user) {
+                        set(ref(database, 'users/' + user.uid),{
                         username: username,
                         email: email
-                    })
+                    });
 
                     alert("Account Created.\n\nPlease Log In.");
                     // resets the register form
                     document.getElementById('register').reset();
                     // goes to the login username input field
                     document.getElementById('lusername').focus();
-                })
-                // If user credentials are not valid and new user is not created
-                .catch((error) => {
-
-                    alert("Sorry, Account Failed to be Created.\nPlease try again");
-
+                    } else {
+                        alert("Sorry, Account Failed to be Created.\nPlease try again");
+                    }
                 });
             });
 
             document.getElementById("login").addEventListener('submit', (e) => {
                 e.preventDefault();
 
-                var username = document.getElementById("lusername").value;
+                var email = document.getElementById("lemail").value;
                 var password = document.getElementById("lpwd").value;
 
-            // Fetch the user's email based on the provided username
-            const usersRef = ref(database, 'users');
-            const query = orderByChild(usersRef, 'username').equalTo(username);
-            
-            get(query)
-                .then((snapshot) => {
-                if (snapshot.exists()) {
-                    const userId = Object.keys(snapshot.val())[0];
-                    const email = snapshot.val()[userId].email;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // If user credentials are valid and user is logged in
+                    const user = userCredential.user;
 
-                    signInWithEmailAndPassword(auth, email, password)
-                        .then((userCredential) => {
-                            // If user credentials are valid and user is logged in
-                            const user = userCredential.user;
+                    const date = new Date();
+                    update(ref(database, 'users/' + user.uid),{
+                    last_login: date,
+                    });
+                    // 
+                    alert("User Logged In.\n\nWelcome to TaskIt!.");
+                    window.location.href = "notes.html";
 
-                            const date = new Date();
-                            update(ref(database, 'users/' + user.uid),{
-                                last_login: date,
-                            });
-                            // 
-                            alert("User Logged In.\n\nWelcome to TaskIt!.");
-                        })
-                        // If user credentials are not valid and user is not logged in
-                        .catch((error) => {
-
-                            alert("Sorry, Login Failed.\nPlease try again");
-
-                        });
-                    }else{
-                        // User with the provided username does not exist
-                        alert("Sorry, Login Failed.\nPlease try again");
-                    }
                 })
+                // If user credentials are not valid and user is not logged in
                 .catch((error) => {
-                    // Error while fetching user data
+
                     alert("Sorry, Login Failed.\nPlease try again");
-                });
+
+                });           
             });
 
-            const user = auth.currentUser;
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    // User is signed in, see docs for a list of available properties
-                    // https://firebase.google.com/docs/reference/js/auth.user
-                    const uid = user.uid;
-                    //window.location.href = "notes.html";
-
-                    // ...
-                } else {
-                    // User is signed out
-                    // ...
-                }
-                });
 
           </script>
 
-        <script src="login&register.js"></script>
-
+       <script src="login&register.js"></script>
+        -->
     </body>
 </html>
