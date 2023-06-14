@@ -13,8 +13,8 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   // Initialize Realtime Database
   const db = firebase.database();
-  const tasksRef = db.ref("Tasks");
-
+  const auth = firebase.auth();
+  
   const priorityValues = {
   high: 3,
   medium: 2,

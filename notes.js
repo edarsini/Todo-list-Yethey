@@ -34,10 +34,31 @@ addBtn.addEventListener("click", function (e) {
   addTask();
 });
 
-showTasks();
+let tasksRef; // Declare tasksRef
+
+  // Listen for authentication state changes
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in
+      const uid = user.uid;
+      tasksRef = db.ref(`Tasks/${uid}`);
+  
+      console.log("User UID:", uid);
+      // Call function
+      showTasks();
+    } else {
+      // User is signed out
+      console.log("No user signed in");
+      tasksRef = null;
+    }
+  });
 
 // Function to show and display tasks
 function showTasks() {
+  if (!tasksRef) {
+    console.log("tasksRef is not available");
+    return;
+  }
   tasksRef.on("value", (snapshot) => {
     let TodoHTML = "";
     let InProgressHTML = "";
