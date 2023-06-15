@@ -1,61 +1,28 @@
-// window.addEventListener('load', function(){
-//   notificationToggle = document.getElementById('notification-toggle');
-//   notificationText = document.getElementById('notification');
-//   alertShown = false; // Track if alert has been shown
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
+  authDomain: "task-it-aa92b.firebaseapp.com",
+  databaseURL: "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "task-it-aa92b",
+  storageBucket: "task-it-aa92b.appspot.com",
+  messagingSenderId: "704129947151",
+  appId: "1:704129947151:web:65be9515384b4b0462357a",
+  measurementId: "G-231G5FKB49"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
-//   notificationToggle.addEventListener('change', function() {
-//     if (this.checked) {
-//       // User has enabled notifications
-//       Notification.requestPermission().then(function(permission) {
-//         if (permission === 'granted') {
-//           notificationText.innerText = 'Notifications enabled';
-//           notificationToggle.checked = true;
-//         } 
-//         else {
-//           // Show alert only if it hasn't been shown before
-//           if (!alertShown) {
-//             alert("To enable notifications, please go to your browser settings and allow notifications for this website.");
-//             alertShown = true;
-//           }
-//           notificationText.innerText = 'Notifications disabled';
-//           notificationToggle.checked = false;
-//           Notification.permission = 'denied';
-//         }
-//       });
-//     }
-//     else {
-//       notificationText.innerText = 'Notifications disabled';
-//       notificationToggle.checked = false;
-//       Notification.permission = 'denied';
-//     }
-//   });
-// });
+// Get a reference to the Firebase database
+const database = firebase.database();
 
-// //rating bar
-// rating = document.getElementsByName('rating');
+// Get a reference to the notification toggle checkbox
+const notificationToggle = document.getElementById("notification-toggle");
 
-// function setRatingValue() {
-//   let ratingValue;
-//   for (let i = 0; i < rating.length; i++) {
-//     if (rating[i].checked) {
-//       ratingValue = rating[i].value;
-//       break;
-//     }
-//   }
-//   console.log(ratingValue); // this will log the selected rating value to the console
-// }
-
-// for (let i = 0; i < rating.length; i++) {
-//   rating[i].addEventListener('click', setRatingValue);
-// }
-
-
-//firebase database
-
-// setting.js
+// Bind the saveUserSettings function to the change event of the toggle checkbox
+notificationToggle.addEventListener("change", saveUserSettings);
 
 // Function to handle saving user's preferences
-
 function saveUserSettings() {
   // Retrieve user preferences from the UI
   const notificationToggle = document.getElementById("notification-toggle");
@@ -67,29 +34,24 @@ function saveUserSettings() {
     rating: ratingValue,
   };
 
-  // Save the preferences to local storage
-  localStorage.setItem("userSettings", JSON.stringify(userSettings));
+  // Get the current user's ID (assuming you have user authentication implemented)
+  const userId = firebase.auth().currentUser.uid;
 
-  // Provide feedback to the user
-  alert("Settings saved successfully!");
+  // Save the preferences to the Firebase database
+  database.ref("users/" + userId + "/settings").set(userSettings)
+    .then(() => {
+      // Update the text based on the toggle state
+      const notificationText = document.getElementById("notification");
+      if (notificationToggle.checked) {
+        notificationText.textContent = "Notifications enabled";
+      } else {
+        notificationText.textContent = "Notifications disabled";
+      }
+
+      // Provide feedback to the user
+      alert("Settings saved successfully!");
+    })
+    .catch((error) => {
+      console.error("Error saving settings:", error);
+    });
 }
-
-// Function to load user's preferences from local storage
-function loadUserSettings() {
-  const storedSettings = localStorage.getItem("userSettings");
-  if (storedSettings) {
-    const userSettings = JSON.parse(storedSettings);
-
-    // Apply the user's preferences to the UI
-    const notificationToggle = document.getElementById("notification-toggle");
-    notificationToggle.checked = userSettings.notifications;
-
-    const ratingInput = document.querySelector(`input[name="rating"][value="${userSettings.rating}"]`);
-    if (ratingInput) {
-      ratingInput.checked = true;
-    }
-  }
-}
-
-// Call the function to load user's preferences when the page loads
-window.addEventListener("DOMContentLoaded", loadUserSettings);
