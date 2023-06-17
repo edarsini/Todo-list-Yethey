@@ -1,15 +1,19 @@
-let tasksRef;
+var tasksRef;
+var userRef;
 
 auth.onAuthStateChanged((user) => {
   if (user) {
     // User is signed in
     const uid = user.uid;
     tasksRef = db.ref(`Tasks/${uid}`);
+    userRef = db.ref(`users/${uid}`);
 
     console.log("User UID:", uid);
     // Call function
+
     showTasks();
     progressbar();
+    displayProfile(user);
   } else {
     // User is signed out
     console.log("No user signed in");
@@ -29,30 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     // Get the input field values
-    var firstName = document.getElementById("firstName").value;
-    var lastName = document.getElementById("lastName").value;
+    var username = document.getElementById("username").value;
     var email = document.getElementById("email").value;
-    var phoneNumber = document.getElementById("phoneNumber").value;
-    var descp = document.getElementById("descp").value;
 
-    // Create an object to hold the user details
-    var userDetails = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phoneNumber: phoneNumber,
-      descp: descp,
-    };
-
-    // Save the user details to local storage
-    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    userRef.update({
+      username: username,
+      email: email
+    });
 
     // Clear the input fields
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
+    document.getElementById("username").value = "";
     document.getElementById("email").value = "";
-    document.getElementById("phoneNumber").value = "";
-    document.getElementById("descp").value = "";
 
     // Display a success message or perform any other desired actions
     alert("User details updated successfully!");
@@ -340,6 +331,63 @@ function priorityImage(data) {
   }
 
   return priorityImg;
+}
+// display profile
+function displayProfile(user) {
+  var email = document.getElementById("email");
+  var user = document.getElementById("username");
+  var display = document.getElementById("dispname");
+
+  userRef.on(
+    "value",
+    (snapshot) => {
+      console.log(snapshot.val());
+      const name = snapshot.val().username;
+      const mail = snapshot.val().email;
+      const profile = snapshot.val().imageUrl;
+      const image = document.getElementById("profileImage");
+      user.value = name;
+      email.value = mail;
+      display.innerHTML = name;
+      if (profile) {
+        image.src = profile;
+      }
+    },
+    (errorObject) => {
+      console.log("The read failed: " + errorObject.name);
+    }
+  );
+}
+
+// for user to upload files
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  const storageRef = firebase.storage().ref();
+  const fileRef = storageRef.child("images/" + file.name);
+
+  fileRef
+    .put(file)
+    .then(() => {
+      return fileRef.getDownloadURL();
+    })
+    .then((url) => {
+      const image = document.getElementById("profileImage");
+      console.log(url);
+      image.src = url;
+
+      userRef
+        .child("imageUrl")
+        .set(url)
+        .then(() => {
+          console.log("Image URL updated successfully.");
+        })
+        .catch((error) => {
+          console.error("Error updating image URL:", error);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 var deleteAccBtn = document.getElementById("deleteAcc");
