@@ -1,5 +1,22 @@
-showTasks();
-progressbar();
+let tasksRef;
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in
+    const uid = user.uid;
+    tasksRef = db.ref(`Tasks/${uid}`);
+
+    console.log("User UID:", uid);
+    // Call function
+    showTasks();
+    progressbar();
+  } else {
+    // User is signed out
+    console.log("No user signed in");
+    tasksRef = null;
+  }
+});
+
 
 // function to update Details
 document.addEventListener("DOMContentLoaded", function () {
