@@ -31,12 +31,12 @@
         </nav>
       <section class="text-black mt-3 p-5">
       <div class="container1">
-      <a href="profile.html" style="text-decoration: none;">
-      <div style="display: flex; align-items: center;">
-        <img src="images.png" alt="profile picture" style="margin-right: 10px;" width="50px" height="50px">
-        <h3>Account User Name</h3>
-      </div>
-      </a>
+        <a href="profile.html" style="text-decoration: none;">
+          <div id="profileSection" style="display: flex; align-items: center;">
+            <img id="profileImageUrl" alt="profile picture" style="margin-right: 10px;" width="50px" height="50px">
+            <h3 id="username">Account User Name</h3>
+          </div>
+        </a>                
       <hr/>
       
       <div>
@@ -101,8 +101,9 @@
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>    
-    <script type="text/javascript" src="theme.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="firebaseconfig.js"></script>
     <script type="module" src="setting.js"></script>
+    <script type="text/javascript" src="theme.js"></script>
     </body>
 </html>
