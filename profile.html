@@ -12,10 +12,22 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js" defer></script>
+    <script
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"
+      defer
+    ></script>
+    <script
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"
+      defer
+    ></script>
+    <script
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"
+      defer
+    ></script>
+    <script
+      src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"
+      defer
+    ></script>
     <script src="firebaseconfig.js" defer></script>
   </head>
 
@@ -62,10 +74,14 @@
           <div class="profile-tab-nav border-right w-50">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
-                <label for="imageUpload" class="image-placeholder" id="uploader">
+                <label
+                  for="imageUpload"
+                  class="image-placeholder"
+                  id="uploader"
+                >
                   <img
                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                    class="img-fluid"
+                    class="img-fluid rounded-circle"
                     style="width: 200px"
                     id="profileImage"
                   />
@@ -97,7 +113,7 @@
               >
                 Account
               </a>
-              <a
+              <!-- <a
                 class="nav-link"
                 id="password-tab"
                 data-toggle="pill"
@@ -107,7 +123,7 @@
                 aria-selected="false"
               >
                 Password
-              </a>
+              </a> -->
               <a
                 class="nav-link"
                 id="reminders-tab"
@@ -200,10 +216,24 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error 
                 </div> -->
               </div>
               <div class="mt-3">
-                <button class="btn btn-primary m-3" id="updateAccount" >
+                <button class="btn btn-primary m-3" id="updateAccount">
                   Update
                 </button>
                 <button class="btn btn-light" id="cancelAcc">Cancel</button>
+                <button
+                  class="btn btn-danger m-3"
+                  id="resetPass"
+                  style="float: right"
+                >
+                  Reset Password
+                </button>
+                <button
+                  class="btn btn-danger m-3"
+                  id="deleteAcc"
+                  style="float: right"
+                >
+                  Delete Account
+                </button>
               </div>
             </div>
             <div
@@ -308,7 +338,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error 
     ></script>
     <script type="text/javascript" src="profile.js" defer></script>
     <script type="text/javascript" src="theme.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   </body>
