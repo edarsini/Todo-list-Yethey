@@ -9,6 +9,7 @@
   <!--Bootstrap CSS-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="icon" href="TaskIt.png" type="image/icon type">
 </head>
 
 <body>
@@ -17,15 +18,15 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand-logo" href="#"><img src="TaskIt.png" class="logo"></a> 
-        <a class="navbar-brand" href="#" style="font-size: x-large;font-weight: bold;font-family: cursive;">Yethey!
+        <a class="navbar-brand-logo" href="#" style="padding-right: 10px;"><img src="TaskIt.png" class="logo"></a> 
+        <a class="navbar-brand" href="#" style="font-size: x-large;font-weight: bold;font-family: myFirstFont;">Yethey!
           To-Do List</a>
         <div class="collapse navbar-collapse float-right" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="notes.html">Notes</a>
-            <a class="nav-link" href="profile.html">Profile</a>
-            <a class="nav-link" href="settings.html">Settings</a>
-            <a class="nav-link" href="logout.html">Logout</a>
+            <a class="nav-link active" aria-current="page" href="notes.html" style="font-family: myFirstFont;">Notes</a>
+            <a class="nav-link" href="profile.html" style="font-family: myFirstFont;">Profile</a>
+            <a class="nav-link" href="settings.html" style="font-family: myFirstFont;">Settings</a>
+            <a class="nav-link" href="logout.html" style="font-family: myFirstFont;">Logout</a>
           </div>
           <div class="toggle"></div>
         </div>
@@ -35,29 +36,29 @@
     <div class="container my-3">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Add a task</h5>
+          <h5 class="card-title" style="font-weight: bold;">Add a task</h5>
           <div class="form-group">
             <textarea class="form-control" id="addTxt" rows="3"> </textarea>
           </div>
           <div class="form-group">
-            <label for="taskDate">Due date:</label>
+            <label for="taskDate" style="font-weight: bold;">Due date:</label>
             <input type="date" class="form-control" id="taskDate" name="taskDate">
           </div>
-          <div>
+          <div style="font-weight: bold;">
             Priority:
             <ul>
               <input type="radio" id="priorityLow" name="priority" value="low" checked />
-              <label for="low">Low</label>
+              <label for="low" style="font-family: sans-serif; font-weight: normal;">Low</label>
               <br>
               <input type="radio" id="priorityMedium" name="priority" value="medium" />
-              <label for="medium">Medium</label>
+              <label for="medium" style="font-family: sans-serif; font-weight: normal;">Medium</label>
               <br>
               <input type="radio" id="priorityHigh" name="priority" value="high" />
-              <label for="high">High</label>
+              <label for="high" style="font-family: sans-serif; font-weight: normal;">High</label>
             </ul>
           </div>
         </div>
-        <button class="btn btn-primary" id="addBtn" style="background-color:#AED4FF; color: black; border: black;">
+        <button class="btn btn-primary" id="addBtn" style="background-color:#AED4FF; color: black; border: black;style="font-family: sans-serif; font-weight: normal;"">
           Add Task
         </button>
         <!-- Popup Error -->
@@ -70,7 +71,7 @@
 
       </div>
       <hr />
-      <h1>Your Tasks</h1>
+      <p style="font-family: myFirstFont; font-size:xx-large">Your Tasks</p>
       <hr />
 
       <div class="container-fluid">
