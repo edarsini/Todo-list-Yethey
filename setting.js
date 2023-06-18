@@ -11,14 +11,15 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 // Get a reference to the Firebase database
 const database = firebase.database();
 
 // Get a reference to the notification toggle checkbox
 const notificationToggle = document.getElementById("notification-toggle");
+
+// Get a reference to the notification text element
+const notificationText = document.getElementById("notification");
 
 // Bind the saveUserSettings function to the change event of the toggle checkbox
 notificationToggle.addEventListener("change", saveUserSettings);
@@ -27,12 +28,10 @@ notificationToggle.addEventListener("change", saveUserSettings);
 function saveUserSettings() {
   // Retrieve user preferences from the UI
   const notificationToggle = document.getElementById("notification-toggle");
-  const ratingValue = document.querySelector('input[name="rating"]:checked').value;
 
   // Create an object with the user's preferences
   const userSettings = {
     notifications: notificationToggle.checked,
-    rating: ratingValue,
   };
 
   // Get the current user's ID (assuming you have user authentication implemented)
@@ -42,7 +41,6 @@ function saveUserSettings() {
   database.ref("users/" + userId + "/settings").set(userSettings)
     .then(() => {
       // Update the text based on the toggle state
-      const notificationText = document.getElementById("notification");
       if (notificationToggle.checked) {
         notificationText.textContent = "Notifications enabled";
       } else {
@@ -56,3 +54,28 @@ function saveUserSettings() {
       console.error("Error saving settings:", error);
     });
 }
+
+// Retrieve the user's current notification preference from the database
+function retrieveUserSettings() {
+  // Get the current user's ID (assuming you have user authentication implemented)
+  const userId = firebase.auth().currentUser.uid;
+
+  // Get the user settings from the Firebase database
+  database.ref("users/" + userId + "/settings").once("value")
+    .then((snapshot) => {
+      const userSettings = snapshot.val();
+      if (userSettings && userSettings.notifications) {
+        notificationToggle.checked = true;
+        notificationText.textContent = "Notifications enabled";
+      } else {
+        notificationToggle.checked = false;
+        notificationText.textContent = "Notifications disabled";
+      }
+    })
+    .catch((error) => {
+      console.error("Error retrieving user settings:", error);
+    });
+}
+
+// Call the retrieveUserSettings function to populate the UI with the user's current preference
+retrieveUserSettings();

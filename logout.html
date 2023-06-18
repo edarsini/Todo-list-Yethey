@@ -16,11 +16,11 @@
 </head>
 
     <body>
-      <div class="container">  
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">     
+      
+       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand-logo" href="#"><img src="TaskIt.png" class="logo"></a> 
-            <a class="navbar-brand" href="#" style="font-size: x-large;font-weight: bold;font-family: cursive;">Yethey! To-Do List im</a>
+            <a class="navbar-brand" href="#" style="font-size: x-large;font-weight: bold;font-family: cursive;">Yethey! To-Do List</a>
             <div class="collapse navbar-collapse float-right" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-link" aria-current="page" href="notes.html">Notes</a>
@@ -33,12 +33,12 @@
           </div>
         </nav>
       <h4 class="head4">Thank you for visiting! Are you sure you want to logout?</h4>
+        <div id="cont">
+          <a id ="logout" class="button-yes" title="logoutyes" href="index.html">Yes</a>
+          <a class="button-no" title="logoutno" href="notes.html">No</a>
+        </div>
       <div id="cont">
-      <a class="button-yes" title="logoutyes" href="index.html">Yes</a>
-      <a class="button-no" title="logoutno" href="notes.html">No</a>
-      </div>
-      <div id="cont">
-      <img src="goodbye.png" width="200" height="200">
+        <img src="goodbye.png" width="200" height="200">
       </div>
       <footer>
         <div class="container">
@@ -48,10 +48,36 @@
             <p class="text-center"><em>Copyright &copy; 2023 To Do List Yethey!&nbsp;
             <!--<a href="mailto:khiruba@sangkari.com">khiruba@sangkari.com</a></em></p>-->
         </div>                    
-        </footer>
+      </footer>
     </div>
     <!-- Include Bootstrap Javascript plugin-->
     <script type="text/javascript" src="theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="firebaseconfig.js"></script>
+    <script>
+      // Get a reference to the logout element
+      const logout = document.getElementById('logout');
+
+      // Add click event listener to the logout element
+      logout.addEventListener('click', (e) => {
+        // Sign out the user
+        auth.signOut()
+          .then(() => {
+            // Sign-out successful.
+            alert('User logged out');
+          })
+          .catch((error) => {
+            // An error happened.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      });
+
+    </script>
+
     </body>
 </html>
