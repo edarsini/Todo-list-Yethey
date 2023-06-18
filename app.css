@@ -305,7 +305,7 @@ input:checked + .slider:before {
   display: flex;
 }
 /*TASKS: To do column*/
-.noteColumn {
+.taskColumn {
   padding: 16px;
   flex-grow: 1;
   margin: 5px;
