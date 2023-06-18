@@ -1,9 +1,26 @@
 var tasksRef;
 var userRef;
 
-auth.onAuthStateChanged((user) => {
-  if (user) {
+// Function to send password reset email
+function sendPasswordResetEmail() {
+  firebase
+    .auth()
+    .sendPasswordResetEmail(user.email)
+    .then(() => {
+      // Password reset email sent successfully
+      alert("Password reset email sent. Please check your inbox.");
+    })
+    .catch((error) => {
+      // An error occurred while sending the password reset email
+      console.log(error);
+      alert("Failed to send password reset email. Please try again.");
+    });
+}
+
+auth.onAuthStateChanged((currentUser) => {
+  if (currentUser) {
     // User is signed in
+    user = currentUser;
     const uid = user.uid;
     tasksRef = db.ref(`Tasks/${uid}`);
     userRef = db.ref(`users/${uid}`);
@@ -21,7 +38,7 @@ auth.onAuthStateChanged((user) => {
   }
 });
 
-
+// function to update Details
 // function to update Details
 document.addEventListener("DOMContentLoaded", function () {
   // Get the updateAccount button element
@@ -38,15 +55,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     userRef.update({
       username: username,
-      email: email
+      email: email,
     });
 
-    // Clear the input fields
-    document.getElementById("username").value = "";
-    document.getElementById("email").value = "";
+    // Update the user's email
+    user
+      .updateEmail(email)
+      .then(() => {
+        // Clear the input fields
+        document.getElementById("username").value = "";
+        document.getElementById("email").value = "";
 
-    // Display a success message or perform any other desired actions
-    alert("User details updated successfully!");
+        // Display a success message or perform any other desired actions
+        alert("User details and email updated successfully!");
+      })
+      .catch((error) => {
+        // Handle the error if updating the email fails
+        console.log(error.message);
+        alert(
+          "Failed to update email. Please try again. \nError Message: " +
+            error.message
+        );
+      });
   });
 });
 
@@ -61,74 +91,65 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
 
     // Clear the input fields
-    document.getElementById("firstName").value = "";
-    document.getElementById("lastName").value = "";
+    document.getElementById("username").value = "";
     document.getElementById("email").value = "";
-    document.getElementById("phoneNumber").value = "";
-    document.getElementById("descp").value = "";
 
     // Display a success message or perform any other desired actions
     alert("Changes Cancelled");
   });
 });
 
-// test value for oldpassword
-let password = "test";
-// function to update password
-var updatePassButton = document.getElementById("updatePass");
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the resetPass button element
+  var resetPassBtn = document.getElementById("resetPass");
 
-// Add click event listener to the updatePass button
-updatePassButton.addEventListener("click", function () {
-  // Get the new password input element
-  var newPasswordInput = document.getElementById("newPass");
+  // Add click event listener to the button
+  resetPassBtn.addEventListener("click", function (event) {
+    // Prevent the default form submission
+    event.preventDefault();
 
-  // Get the old password input element
-  var oldPasswordInput = document.getElementById("oldPass");
-
-  // Get the confirm password input element
-  var confirmPasswordInput = document.getElementById("confirmPass");
-
-  // Get the password from local storage
-  // var storedPassword = localStorage.getItem('password');
-  // test valur for stored password
-  var storedPassword = password;
-
-  // Check if the old password is incorrect
-  if (oldPasswordInput.value !== storedPassword) {
-    // Display error message
-    alert("Incorrect old password!");
-    return;
-  }
-
-  // Check if any field is empty
-  if (
-    newPasswordInput.value === "" ||
-    oldPasswordInput.value === "" ||
-    confirmPasswordInput.value === ""
-  ) {
-    // Display error message
-    alert("Please fill in all fields!");
-    return;
-  }
-
-  // Check if the new password and confirm password match
-  if (newPasswordInput.value !== confirmPasswordInput.value) {
-    // Display error message
-    alert("New password and confirm password do not match!");
-    return;
-  }
-
-  // Update the password in local storage
-  localStorage.setItem("password", newPasswordInput.value);
-
-  // Display success message
-  alert("Password updated successfully!");
-
-  // Clear the input fields
-  newPasswordInput.value = "";
-  oldPasswordInput.value = "";
-  confirmPasswordInput.value = "";
+    // Check if the user is authenticated and has an email
+    if (user && user.email) {
+      // Call the function to send password reset email
+      sendPasswordResetEmail();
+    } else {
+      // User is not authenticated or does not have an email
+      alert("User email not available. Please try again.");
+    }
+  });
 });
+// delete acc
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the deleteAcc button element
+  var deleteAcc = document.getElementById("deleteAcc");
+
+  // Add click event listener to the button
+  deleteAcc.addEventListener("click", function (event) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    // Check if the user is authenticated
+    if (user) {
+      // Delete the user account
+      user
+        .delete()
+        .then(() => {
+          // User account deleted successfully
+          alert("Your account has been deleted.");
+        })
+        .catch((error) => {
+          // An error occurred while deleting the user account
+          console.log(error);
+          alert("Failed to delete your account. Please try again.");
+        });
+    } else {
+      // User is not authenticated
+      alert("User not available. Please try again.");
+    }
+  });
+});
+
+// test value for oldpassword
 
 // // cancel button for account
 // document.addEventListener("DOMContentLoaded", function () {
