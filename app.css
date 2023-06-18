@@ -103,7 +103,7 @@ body.dark {
 }
 
 #navbarNavAltMarkup {
-  margin-left: 20%;
+  margin-left: 15%;
 }
 
 .toggle:before {
@@ -447,4 +447,9 @@ input:checked + .slider:before {
 
 .image-placeholder:hover::after {
   opacity: 1;
+}
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(Rig-BoldReverse.woff);
 }
