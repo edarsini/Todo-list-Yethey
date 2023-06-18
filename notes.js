@@ -31,6 +31,7 @@ document.getElementById("taskDate").value = formattedNextDay;
 
 let addBtn = document.getElementById("addBtn");
 addBtn.addEventListener("click", function (e) {
+  e.preventDefault(); // Prevents list from refreshing everytime task is added
   addTask();
 });
 
@@ -127,6 +128,7 @@ function showTasks() {
     taskCompleted.innerHTML = CompletedHTML;
   });
 }
+
 // Function to convert Firebase snapshot to an array
 function snapshotToArray(snapshot) {
   const array = [];
@@ -152,7 +154,43 @@ function deleteTask(taskId) {
 }
 // Function to edit task
 function editTask(taskId) {
-  const newText = prompt("Enter the new task text:");
+  // Get the current task text
+  tasksRef.child(taskId).child('text').once('value', (snapshot) => {
+    const currentText = snapshot.val();
+
+    // Create a Bootstrap modal dialog
+    const modal = document.createElement("div");
+    modal.classList.add("modal", "fade");
+    modal.innerHTML = `
+      <div class="modal-dialog">
+        <div class="modal-content" style="border-radius: 20px;">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Task</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control" id="editText" rows="3">${currentText}</textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="updateTaskText('${taskId}')">Save</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Append the modal to the document body
+    document.body.appendChild(modal);
+
+    // Show the modal
+    $(modal).modal("show");
+  });
+}
+
+
+function updateTaskText(taskId) {
+  // Get the new task text from the modal textarea
+  const newText = document.getElementById("editText").value;
 
   // Update the task text in the database
   tasksRef
@@ -169,6 +207,7 @@ function editTask(taskId) {
       console.error("Error updating task text:", error);
     });
 }
+
 // Function to update the Task Status if user clicks next
 function updateTaskStatus(taskId, currentStatus) {
   let newStatus;
