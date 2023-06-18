@@ -1,21 +1,8 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCAhrqyYLt1Xf-EXCAA-rkAROpB8h9PJvg",
-  authDomain: "task-it-aa92b.firebaseapp.com",
-  databaseURL: "https://task-it-aa92b-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "task-it-aa92b",
-  storageBucket: "task-it-aa92b.appspot.com",
-  messagingSenderId: "704129947151",
-  appId: "1:704129947151:web:65be9515384b4b0462357a",
-  measurementId: "G-231G5FKB49"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+var tasksRef;
+var userRef;
 
-// Get a reference to the Firebase database
-const database = firebase.database();
-
-// Get a reference to the notification toggle checkbox
+document.addEventListener("DOMContentLoaded", function() {
+  // Get a reference to the notification toggle checkbox
 const notificationToggle = document.getElementById("notification-toggle");
 
 // Get a reference to the notification text element
@@ -38,7 +25,9 @@ function saveUserSettings() {
   const userId = firebase.auth().currentUser.uid;
 
   // Save the preferences to the Firebase database
-  database.ref("users/" + userId + "/settings").set(userSettings)
+  database
+    .ref("users/" + userId + "/settings")
+    .set(userSettings)
     .then(() => {
       // Update the text based on the toggle state
       if (notificationToggle.checked) {
@@ -55,27 +44,122 @@ function saveUserSettings() {
     });
 }
 
-// Retrieve the user's current notification preference from the database
+// Function to retrieve the user's current notification preference from the database
 function retrieveUserSettings() {
-  // Get the current user's ID (assuming you have user authentication implemented)
-  const userId = firebase.auth().currentUser.uid;
+  const user = firebase.auth().currentUser;
 
-  // Get the user settings from the Firebase database
-  database.ref("users/" + userId + "/settings").once("value")
-    .then((snapshot) => {
-      const userSettings = snapshot.val();
-      if (userSettings && userSettings.notifications) {
-        notificationToggle.checked = true;
-        notificationText.textContent = "Notifications enabled";
-      } else {
-        notificationToggle.checked = false;
-        notificationText.textContent = "Notifications disabled";
-      }
-    })
-    .catch((error) => {
-      console.error("Error retrieving user settings:", error);
-    });
+  if (user) {
+    // Get the current user's ID
+    const userId = user.uid;
+
+    // Get the user settings from the Firebase database
+    database
+      .ref("users/" + userId + "/settings")
+      .once("value")
+      .then((snapshot) => {
+        const userSettings = snapshot.val();
+        updateNotificationUI(userSettings);
+      })
+      .catch((error) => {
+        console.error("Error retrieving user settings:", error);
+      });
+  } else {
+    // User is not authenticated, handle the case accordingly
+    console.log("User is not authenticated");
+  }
 }
 
-// Call the retrieveUserSettings function to populate the UI with the user's current preference
+// Function to update the UI based on the user's notification settings
+function updateNotificationUI(userSettings) {
+  if (userSettings && userSettings.notifications) {
+    notificationToggle.checked = true;
+    notificationText.textContent = "Notifications enabled";
+  } else {
+    notificationToggle.checked = false;
+    notificationText.textContent = "Notifications disabled";
+  }
+}
+
+// Call the function to retrieve user settings when needed
 retrieveUserSettings();
+
+  auth.onAuthStateChanged((currentUser) => {
+    let user;
+    if (currentUser) {
+      // User is signed in
+      user = currentUser;
+      const uid = user.uid;
+      tasksRef = db.ref(`Tasks/${uid}`);
+      userRef = db.ref(`users/${uid}`);
+  
+      console.log("User UID:", uid);
+      // Call function
+      displayProfile(user);
+    } else {
+      // User is signed out
+      console.log("No user signed in");
+      tasksRef = null;
+    }
+  });
+  
+  // // display profile
+  // function displayProfile(user) {
+  //   var email = document.getElementById("email");
+  //   var user = document.getElementById("username");
+  //   var display = document.getElementById("dispname");
+  
+  //   userRef.on(
+  //     "value",
+  //     (snapshot) => {
+  //       console.log(snapshot.val());
+  //       const name = snapshot.val().username;
+  //       const profile = snapshot.val().imageUrl;
+  //       const image = document.getElementById("profileImage");
+  //       user.value = name;
+  //       email.value = mail;
+  //       display.innerHTML = name;
+  //       if (profile) {
+  //         image.src = profile;
+  //       }
+  //     },
+  //     (errorObject) => {
+  //       console.log("The read failed: " + errorObject.name);
+  //     }
+  //   );
+  // }
+
+}); 
+
+function snapshotToArray(snapshot) {
+  const array = [];
+  snapshot.forEach((childSnapshot) => {
+    const key = childSnapshot.key;
+    const val = childSnapshot.val();
+    array.push({ key, val });
+  });
+  return array;
+}
+
+ // Display profile
+ function displayProfile() {
+  var email = document.getElementById("email");
+  var accountUsername = document.getElementById("username");
+  var profileImage = document.getElementById("profileImageUrl");
+
+  userRef.on(
+    "value",
+    (snapshot) => {
+      const username = snapshot.val().username;
+      const profileImageUrl = snapshot.val().imageUrl;
+
+      accountUsername.innerHTML = username;
+      
+      if (profileImageUrl) {
+        profileImage.src = profileImageUrl;
+      }
+    },
+    (errorObject) => {
+      console.log("The read failed: " + errorObject.name);
+    }
+  );
+}
