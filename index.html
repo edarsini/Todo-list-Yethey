@@ -79,12 +79,16 @@
                   alert("Account Created.\n\nPlease Log In.");
                   // resets the register form
                   document.getElementById('register').reset();
-                  // goes to the login username input field
-                  document.getElementById('lusername').focus();
                 } else {
                   alert("Sorry, Account Failed to be Created.\nPlease try again");
                 }
-              });
+              })
+              .catch((error) => {
+              // Handle errors, including password length validation
+              if (error.code === "auth/weak-password") {
+                alert("Password should be at least 6 characters long.");
+              }
+            });
           });
         
           document.getElementById("login").addEventListener('submit', (e) => {
