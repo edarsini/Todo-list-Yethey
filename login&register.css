@@ -3,11 +3,35 @@
     padding: 0;
     font-family: sans-serif;
   }
-
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    float: left;
+    margin-right: 20px;
+  }
+  
+  .navbar-title {
+    float: left;
+    color: #FFFFFF;
+    font-size: 20px;
+    line-height: 40px;
+    margin-right: 110px;
+  }
   .super {
     height: 100%;
     width: 100%;
-    background-image: url(bluebackgroundimg.jpg);
+    background-image: url(gradientsmall.jpg);
     background-position: center;
     background-size: cover;
     position: absolute;
@@ -49,13 +73,13 @@
     position: absolute;
     width: 110px;
     height: 100%;
-    background: linear-gradient(to right, #0575E6, #00F260);
+    background: linear-gradient(to right, #1b32ff, #56c1ff);
     border-radius: 30px;
     transition: 0.5s;
   }
   
   .custom-btn{
-    background: linear-gradient(to right, #0575E6, #00F260);
+    background: linear-gradient(to right, #1b32ff, #56c1ff);
     border-color: #0575E6; /* Optional: Change the border color if needed */
     color: white;
   }
@@ -85,7 +109,7 @@
     cursor: pointer;
     display: block;
     margin: auto;
-    background: linear-gradient(to right, #0575E6, #00F260);
+    background: linear-gradient(to right, #1b32ff, #56c1ff);
     border: 0;
     outline: none;
     border-radius: 30px;
@@ -108,5 +132,10 @@
 
   #register {
     right: 450px;
+  }
+
+@font-face {
+    font-family: myFirstFont;
+    src: url(Rig-BoldReverse.woff);
   }
   
