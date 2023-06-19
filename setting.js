@@ -121,6 +121,7 @@ function updateNotificationUI(userSettings) {
 
 // Call the function to retrieve user settings when needed
 retrieveUserSettings();
+updateNotificationUI();
 
   auth.onAuthStateChanged((currentUser) => {
     let user;
@@ -134,6 +135,8 @@ retrieveUserSettings();
       console.log("User UID:", uid);
       // Call function
       displayProfile(user);
+      retrieveUserSettings();
+      updateNotificationUI();
     } else {
       // User is signed out
       console.log("No user signed in");
