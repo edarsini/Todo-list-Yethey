@@ -25,6 +25,9 @@ function saveUserSettings() {
   const userId = firebase.auth().currentUser.uid;
 
   // Save the preferences to the Firebase database
+  // Get a reference to the Firebase Realtime Database
+var database = firebase.database();
+
   database
     .ref("users/" + userId + "/settings")
     .set(userSettings)
@@ -43,6 +46,43 @@ function saveUserSettings() {
       console.error("Error saving settings:", error);
     });
 }
+
+// Get a reference to the feedback form rating inputs
+const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
+// Function to handle saving user's feedback rating
+function saveFeedbackRating() {
+  // Retrieve user feedback rating from the UI
+  let rating;
+  for (const input of ratingInputs) {
+    if (input.checked) {
+      rating = input.value;
+      break;
+    }
+  }
+
+  // Get the current user's ID (assuming you have user authentication implemented)
+  const userId = firebase.auth().currentUser.uid;
+
+  // Save the feedback rating to the Firebase database
+  var database = firebase.database();
+  database
+    .ref("ratings/")
+    .child(userId)
+    .set(rating)
+    .then(() => {
+      // Provide feedback to the user
+      alert("Feedback rating saved successfully!");
+    })
+    .catch((error) => {
+      console.error("Error saving feedback rating:", error);
+    });
+}
+
+// Call the saveFeedbackRating function when a rating input is clicked
+ratingInputs.forEach((input) => {
+  input.addEventListener("click", saveFeedbackRating);
+});
 
 // Function to retrieve the user's current notification preference from the database
 function retrieveUserSettings() {
