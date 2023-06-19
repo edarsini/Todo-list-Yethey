@@ -130,6 +130,10 @@ body.dark input[type="radio"] {
   filter: invert(1); /* invert the color of the radio button to white */
 }
 
+body.dark .taskColumn h6{
+  color: var(--dark-bg-color);
+}
+
 /* profile dark mode */
 /* leftside */
 body.dark .p-4 {

@@ -67,8 +67,7 @@ function saveFeedbackRating() {
   // Save the feedback rating to the Firebase database
   var database = firebase.database();
   database
-    .ref("ratings/")
-    .child(userId)
+    .ref("ratings/" + userId)
     .set(rating)
     .then(() => {
       // Provide feedback to the user
@@ -141,32 +140,6 @@ retrieveUserSettings();
       tasksRef = null;
     }
   });
-  
-  // // display profile
-  // function displayProfile(user) {
-  //   var email = document.getElementById("email");
-  //   var user = document.getElementById("username");
-  //   var display = document.getElementById("dispname");
-  
-  //   userRef.on(
-  //     "value",
-  //     (snapshot) => {
-  //       console.log(snapshot.val());
-  //       const name = snapshot.val().username;
-  //       const profile = snapshot.val().imageUrl;
-  //       const image = document.getElementById("profileImage");
-  //       user.value = name;
-  //       email.value = mail;
-  //       display.innerHTML = name;
-  //       if (profile) {
-  //         image.src = profile;
-  //       }
-  //     },
-  //     (errorObject) => {
-  //       console.log("The read failed: " + errorObject.name);
-  //     }
-  //   );
-  // }
 
 }); 
 
