@@ -286,3 +286,19 @@ function priorityImage(data) {
 
   return priorityImg;
 }
+
+function displayErrorModal(message) {
+  const modal = document.getElementById("errorModal");
+  const errorMessageElement = document.getElementById("errorMessage");
+
+  errorMessageElement.textContent = message;
+  modal.style.display = "block";
+
+  // Close the modal when the close button or the outside area is clicked
+  const closeButton = document.getElementsByClassName("close")[0];
+  window.onclick = function (event) {
+    if (event.target === modal || event.target === closeButton) {
+      modal.style.display = "none";
+    }
+  };
+}
