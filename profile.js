@@ -136,6 +136,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(() => {
           // User account deleted successfully
           alert("Your account has been deleted.");
+
+           // Replace the current URL with a new URL
+           history.replaceState(null, null, "/index.html");
+
+           // Redirect the user to the account-deleted.html page
+           window.location.href = "/index.html";
         })
         .catch((error) => {
           // An error occurred while deleting the user account
